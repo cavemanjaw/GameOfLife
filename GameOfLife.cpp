@@ -14,6 +14,25 @@ void PrintSimMatrix(sim_matrix& simMatrix)
 	}
 }
 
+void PrintSimMatrixPretty(sim_matrix& simMatrix)
+{ 
+	for (auto i = simMatrix.begin(); i != simMatrix.end(); ++i)
+	{
+		for (auto j = i->begin(); j != i->end(); ++j)
+		{
+			if (*j)
+			{
+				std::cout << "*";
+			}
+			else
+			{
+				std::cout << "-";
+			}
+		}
+	std::cout << std::endl;
+	}
+}
+
 // Change this function to have an enum for populating with certain output
 void RandPopulateSimMatrix(sim_matrix& simMatrix)
 {

@@ -17,4 +17,6 @@ void SetCellStatus(sim_matrix& simMatrix, int x, int y, int aliveAdjacent);
 
 void DoSimStep(sim_matrix& simMatrix);
 
+void PrintSimMatrixPretty(sim_matrix& simMatrix);
+
 #endif
