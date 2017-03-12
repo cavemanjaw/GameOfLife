@@ -2,13 +2,16 @@
 #include <iostream>
 #include <random>
 
+// TODO: For the abstraction type represented by class SimCell there is a need for big interface change in almost all of this functions
+// This could be done with constructors for random initailize values in matrix simulation grid, changes need to me made in SimCell class
+
 void PrintSimMatrix(sim_matrix& simMatrix)
 {
 	for (auto i = simMatrix.begin(); i != simMatrix.end(); ++i)
 	{
 		for (auto j = i->begin(); j != i->end(); ++j)
 		{
-			std::cout << *j << " ";
+			std::cout << j->IsAlive() << " ";
 		}
 	std::cout << std::endl;
 	}
@@ -20,7 +23,7 @@ void PrintSimMatrixPretty(sim_matrix& simMatrix)
 	{
 		for (auto j = i->begin(); j != i->end(); ++j)
 		{
-			if (*j)
+			if (j->IsAlive())
 			{
 				std::cout << "*";
 			}
@@ -40,7 +43,7 @@ void RandPopulateSimMatrix(sim_matrix& simMatrix)
 	{		
 		for (auto j = i->begin(); j != i->end(); ++j)
 		{
-			*j = rand()%2; 
+			j->SetCellState(rand()%2); 
 		}
 	}
 }
@@ -54,6 +57,7 @@ void ResizeSimMatrix(sim_matrix& simMatrix, int size)
 	}
 }
 
+// TODO: Make a function IsInBound or something like this, for checking if the adjacent cells are in bound of matrix grid
 // One could check for the status of cell in next step (that is bool - alive or dead)
 // Or one could check how many adjescet cells are alive and return that value (it is more extensible, introduces more modularity)
 int AdjacentCellsAlive(sim_matrix& simMatrix, int x, int y)
@@ -70,7 +74,7 @@ int AdjacentCellsAlive(sim_matrix& simMatrix, int x, int y)
 			// Check if cell is not out of bound and analyzed cell
 			if ((i >= 0 && i < N) && (j >= 0 && j < N) && !(x == i && y == i))
 			{
-				if (simMatrix[i][j] == true)
+				if (simMatrix[i][j].IsAlive() == true)
 				{
 					++aliveAdjacent;
 				}		
@@ -88,17 +92,17 @@ int AdjacentCellsAlive(sim_matrix& simMatrix, int x, int y)
 // This is possible bad idea, because it will be copied each time SetCellStatus is invoked
 void SetCellStatus(sim_matrix& simMatrix, int x, int y, int aliveAdjacent)
 {
-	if (simMatrix[x][y] == true && (aliveAdjacent == 2 || aliveAdjacent == 3))
+	if (simMatrix[x][y].IsAlive() == true && (aliveAdjacent == 2 || aliveAdjacent == 3))
 	{
-		simMatrix[x][y] = true;
+		simMatrix[x][y].SetAlive();
 	}
-	else if (simMatrix[x][y] == false && aliveAdjacent == 3)
+	else if (simMatrix[x][y].IsAlive() == false && aliveAdjacent == 3)
 	{
-		simMatrix[x][y] = true;
+		simMatrix[x][y].SetAlive();
 	}
 	else
 	{
-		simMatrix[x][y] = false;
+		simMatrix[x][y].SetDead();
 	}
 }
 

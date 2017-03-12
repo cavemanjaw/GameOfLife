@@ -1,13 +1,14 @@
 #ifndef GAME_OF_LIFE_H
 #define GAME_OF_LIFE_H
 
+#include "SimCell.h"
 #include <vector>
 
 //TODO: Encapsulate sim_matrix in a class with methods to get better interface and firlds for statisticd
 
 //TODO: Create entire class of SimCell to obtain statistics and encaplsulate fields for better interface handling
 
-typedef std::vector<std::vector<bool>> sim_matrix;
+typedef std::vector<std::vector<SimCell>> sim_matrix;
 
 void PrintSimMatrix(sim_matrix& simMatrix);
 

@@ -7,6 +7,8 @@ public:
 	SimCell();
 	void SetAlive();
 	void SetDead();
+	bool IsAlive();
+	void SetCellState(bool state);
 protected:
 private:
 	bool isAlive;

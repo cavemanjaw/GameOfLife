@@ -24,3 +24,20 @@ void SimCell::SetDead()
 		++killCounter;
 	}
 }
+
+bool SimCell::IsAlive()
+{
+	if (isAlive)
+	{
+		return true;
+	}
+	return false;
+}
+
+// Dangerous, because of not incrementing any of counters, call of this function is not captured by statistics
+// On the other hand, we must initialize values and this is the situation in which we do not want to update statistics
+// This could be done by constructor!!!!!!!
+void SimCell::SetCellState(bool state)
+{
+	isAlive = state;
+}
