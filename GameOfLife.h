@@ -2,26 +2,19 @@
 #define GAME_OF_LIFE_H
 
 #include "SimCell.h"
-#include <vector>
+#include "SimMatrix.h"
+
+// This should be placed higher than in SimMatrix class
+// Not sure, since right now it modifies only one object of SimMatrix type, pushing the simulation one step forward
+// Although DoSimStep must be included in SimMatrix type since it modifies private member variable simMatrix
+
+// Useless for now
+//void DoSimStep(SimMatrix& simMatrix);
+
+//TODO: Add const qualifiers for increasing security
 
 //TODO: Encapsulate sim_matrix in a class with methods to get better interface and firlds for statisticd
 
 //TODO: Create entire class of SimCell to obtain statistics and encaplsulate fields for better interface handling
-
-typedef std::vector<std::vector<SimCell>> sim_matrix;
-
-void PrintSimMatrix(sim_matrix& simMatrix);
-
-void RandPopulateSimMatrix(sim_matrix& simMatrix);
-
-void ResizeSimMatrix(sim_matrix& simMatrix, int size);
-
-int AdjacentCellsAlive(sim_matrix& simMatrix, int x, int y);
-
-void SetCellStatus(sim_matrix& simMatrix, int x, int y, int aliveAdjacent);
-
-void DoSimStep(sim_matrix& simMatrix);
-
-void PrintSimMatrixPretty(sim_matrix& simMatrix);
 
 #endif

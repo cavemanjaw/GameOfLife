@@ -1,9 +1,12 @@
 #include "GameOfLife.h"
+#include "SimMatrix.h"
 #include <iostream>
+
+//TODO: Completly rebuild main, better interface is a priority
 
 int main()
 {
-	sim_matrix simMatrix;
+	SimMatrix simMatrix;
 	int matrixSize;
 	bool isPrettySet = 0;
 	int simSteps;
@@ -17,31 +20,31 @@ int main()
 	std::cout << "Type 1 for pretty printing" << std::endl;
 	std::cin >> isPrettySet;
 
-	ResizeSimMatrix(simMatrix, matrixSize);
+	simMatrix.ResizeSimMatrix(matrixSize);
 
-	RandPopulateSimMatrix(simMatrix);
+	simMatrix.RandPopulateSimMatrix();
 	
 	if (isPrettySet)
 	{
-		PrintSimMatrixPretty(simMatrix);
+		simMatrix.PrintSimMatrixPretty();
 	}
 	else
 	{		
-		PrintSimMatrix(simMatrix);	
+		simMatrix.PrintSimMatrix();	
 	}
 
 	std::cout << std::endl;
 	for (int i = 0; i < simSteps; ++i)
 	{
-		DoSimStep(simMatrix);
+		simMatrix.DoSimStep();
 		
 		if (isPrettySet)
 		{
-			PrintSimMatrixPretty(simMatrix);
+			simMatrix.PrintSimMatrixPretty();
 		}
 		else
 		{		
-			PrintSimMatrix(simMatrix);	
+			simMatrix.PrintSimMatrix();	
 		}
 		std::cout << std::endl;
 	}
