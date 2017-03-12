@@ -2,30 +2,6 @@
 #include <iostream>
 #include <random>
 
-SimCell::SimCell()
-	:killCounter(0),
-	 respawnCounter(0)
-{}
-
-void SimCell::SetAlive()
-{
-	// If it already alive do not do anything
-	if (!isAlive)
-	{	
-		isAlive = true;
-		++respawnCounter;
-	}
-}
-
-void SimCell::SetDead()
-{
-	if (isAlive)
-	{
-		isAlive = false;
-		++killCounter;
-	}
-}
-
 void PrintSimMatrix(sim_matrix& simMatrix)
 {
 	for (auto i = simMatrix.begin(); i != simMatrix.end(); ++i)
