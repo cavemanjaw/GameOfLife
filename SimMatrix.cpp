@@ -5,6 +5,48 @@
 // TODO: For the abstraction type represented by class SimCell there is a need for big interface change in almost all of this functions
 // This could be done with constructors for random initailize values in matrix simulation grid, changes need to me made in SimCell class
 
+SimMatrix::SimMatrix(int matrixSize, FillMode fillMode)
+{
+//Workaroung right now, case for random filling uses member function
+//Consider if checking inside two loops (if that is on top of assignment is faster than if before two loops
+
+//First of all, resize the matrix
+ResizeSimMatrix(matrixSize);
+
+switch(fillMode)
+{
+case RANDOM_FILL:
+	for (auto i = simMatrix.begin(); i != simMatrix.end(); ++i)
+	{		
+		for (auto j = i->begin(); j != i->end(); ++j)
+		{
+			j->SetCellState(rand()%2); 
+		}
+	}
+break;
+
+case ALIVE_FILL:
+	for (auto i = simMatrix.begin(); i != simMatrix.end(); ++i)
+	{		
+		for (auto j = i->begin(); j != i->end(); ++j)
+		{
+			j->SetAlive(); 
+		}
+	}
+break;
+
+case DEAD_FILL:
+	for (auto i = simMatrix.begin(); i != simMatrix.end(); ++i)
+	{		
+		for (auto j = i->begin(); j != i->end(); ++j)
+		{
+			j->SetDead(); 
+		}
+	}
+break;
+}
+}
+
 void SimMatrix::PrintSimMatrix()
 {
 	for (auto i = simMatrix.begin(); i != simMatrix.end(); ++i)
@@ -113,6 +155,7 @@ void SimMatrix::SetCellStatus(int x, int y, int aliveAdjacent)
 
 // THERE IS A NEED TO DO A COPY OF THE ARRAY AS WE ITERATE OVR IT AND CHANGE THE VALUES DURING ITERATION!!
 // Make a copy of local simMatrix, work on it, assign it to the original passed by reference
+// Consider leaking resources
 void SimMatrix::DoSimStep()
 {
 	SimMatrix locSimMatrix = *this;

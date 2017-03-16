@@ -8,15 +8,25 @@
 //TODO: Which of function make private?
 //TODO: Consider, that if you make some of the functions private it would be necessary to modify DoSimStep() function as it creates a locals var and assignes it to *this
 
+//Move to GameOfLife.h?
+enum FillMode
+{
+	RANDOM_FILL = 2,
+	ALIVE_FILL = 1,
+	DEAD_FILL = 0
+};
+
 class SimMatrix
 {
 public:
+// Provide enum for chosing how to fill simulation grid
+SimMatrix(int matrixSize, FillMode fillMode);
+
 void PrintSimMatrix();
 
 void RandPopulateSimMatrix();
 
 // Only squared matrixes supported right now
-void ResizeSimMatrix(int size);
 
 //Returns the amount of alive adjacent cells for given x and y coordinates
 int AdjacentCellsAlive(int x, int y);
@@ -29,7 +39,10 @@ void DoSimStep();
 
 protected:
 private:
-	std::vector<std::vector<SimCell>> simMatrix;
+std::vector<std::vector<SimCell>> simMatrix;
+	
+void ResizeSimMatrix(int size);
+
 };
 //TODO: Add const qualifiers for increasing security
 
