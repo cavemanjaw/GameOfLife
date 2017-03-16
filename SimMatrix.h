@@ -22,18 +22,18 @@ public:
 // Provide enum for chosing how to fill simulation grid
 SimMatrix(int matrixSize, FillMode fillMode);
 
-void PrintSimMatrix();
+void PrintSimMatrix() const;
 
 void RandPopulateSimMatrix();
 
 // Only squared matrixes supported right now
 
 //Returns the amount of alive adjacent cells for given x and y coordinates
-int AdjacentCellsAlive(int x, int y);
+int AdjacentCellsAlive(int x, int y) const;
 
 void SetCellStatus(int x, int y, int aliveAdjacent);
 
-void PrintSimMatrixPretty();
+void PrintSimMatrixPretty() const;
 
 void DoSimStep();
 

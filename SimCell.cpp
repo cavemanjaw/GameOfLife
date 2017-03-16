@@ -25,7 +25,7 @@ void SimCell::SetDead()
 	}
 }
 
-bool SimCell::IsAlive()
+bool SimCell::IsAlive() const
 {
 	if (isAlive)
 	{

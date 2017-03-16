@@ -2,6 +2,7 @@
 #include <random>
 #include "SimMatrix.h"
 
+//TODO: COnsider which function can be marked as "const"
 // TODO: For the abstraction type represented by class SimCell there is a need for big interface change in almost all of this functions
 // This could be done with constructors for random initailize values in matrix simulation grid, changes need to me made in SimCell class
 
@@ -47,7 +48,7 @@ break;
 }
 }
 
-void SimMatrix::PrintSimMatrix()
+void SimMatrix::PrintSimMatrix() const
 {
 	for (auto i = simMatrix.begin(); i != simMatrix.end(); ++i)
 	{
@@ -59,7 +60,7 @@ void SimMatrix::PrintSimMatrix()
 	}
 }
 
-void SimMatrix::PrintSimMatrixPretty()
+void SimMatrix::PrintSimMatrixPretty() const
 { 
 	for (auto i = simMatrix.begin(); i != simMatrix.end(); ++i)
 	{
@@ -102,7 +103,7 @@ void SimMatrix::ResizeSimMatrix(int size)
 // TODO: Make a function IsInBound or something like this, for checking if the adjacent cells are in bound of matrix grid
 // One could check for the status of cell in next step (that is bool - alive or dead)
 // Or one could check how many adjescet cells are alive and return that value (it is more extensible, introduces more modularity)
-int SimMatrix::AdjacentCellsAlive(int x, int y)
+int SimMatrix::AdjacentCellsAlive(int x, int y) const
 {
 	// For now only squared matrix are supported
 	int N = simMatrix.size();

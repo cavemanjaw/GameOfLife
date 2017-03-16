@@ -3,6 +3,7 @@
 #include <iostream>
 
 //TODO: Completly rebuild main, better interface is a priority
+//Interface for making simulation can be done in GameOfLife translation unit
 
 int main()
 {
