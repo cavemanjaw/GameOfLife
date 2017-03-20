@@ -12,6 +12,8 @@ public:
 	void SetDead();
 	bool IsAlive() const;
 	void SetCellState(bool state);
+	int GetRespawnCounter();
+	int GetKillCounter();
 protected:
 private:
 	bool isAlive;

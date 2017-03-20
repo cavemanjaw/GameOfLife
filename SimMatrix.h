@@ -3,10 +3,13 @@
 
 #include "SimCell.h"
 #include <vector>
+#include <utility>
 
+//TODO: Return a pair of ints for the coordinates?
 //TODO: Which function to call inside constructor?
 //TODO: Which of function make private?
 //TODO: Consider, that if you make some of the functions private it would be necessary to modify DoSimStep() function as it creates a locals var and assignes it to *this
+//TODO: Function for getting statistics of fields
 
 //Move to GameOfLife.h?
 enum FillMode
@@ -21,6 +24,8 @@ class SimMatrix
 public:
 // Provide enum for chosing how to fill simulation grid
 SimMatrix(int matrixSize, FillMode fillMode);
+
+std::pair<int, int> GetMaxRespawnCell();
 
 void PrintSimMatrix() const;
 

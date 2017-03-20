@@ -5,6 +5,16 @@ SimCell::SimCell()
 	 respawnCounter(0)
 {}
 
+int SimCell::GetRespawnCounter()
+{
+	return respawnCounter;
+}
+
+int SimCell::GetKillCounter()
+{
+	return killCounter;
+}
+
 void SimCell::SetAlive()
 {
 	// If it already alive do not do anything

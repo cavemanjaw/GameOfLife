@@ -48,6 +48,26 @@ break;
 }
 }
 
+std::pair<int, int> SimMatrix::GetMaxRespawnCell()
+{
+	std::pair<int, int> maxRespawnCellCoord(0, 0);
+	int maxRespawn = 0;	
+
+	for (auto i = simMatrix.begin(); i != simMatrix.end(); ++i)
+	{
+		for (auto j = i->begin(); j != i->end(); ++j)
+		{
+			//Can be done on iterators?
+			if (j->GetRespawnCounter() > maxRespawn)
+			{
+				maxRespawnCellCoord.first = (i - simMatrix.begin()); 
+				maxRespawnCellCoord.second = (j - i->begin());
+			}
+		}
+	}
+	return maxRespawnCellCoord;
+}
+
 void SimMatrix::PrintSimMatrix() const
 {
 	for (auto i = simMatrix.begin(); i != simMatrix.end(); ++i)
