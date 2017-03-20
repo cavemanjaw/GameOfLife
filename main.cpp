@@ -1,9 +1,35 @@
 #include "GameOfLife.h"
 #include "SimMatrix.h"
 #include <iostream>
+#include <gtest/gtest.h>
 
 //TODO: Completly rebuild main, better interface is a priority
 //Interface for making simulation can be done in GameOfLife translation unit
+
+
+int ReturnDoubled(int number)
+{
+	return number * 2;
+}
+
+TEST(ReturnDoubled, ZeroTest)
+{
+	ASSERT_EQ(0, ReturnDoubled(0));
+}
+
+TEST(ReturnDoubled, NormalNumber)
+{
+	ASSERT_EQ(4, ReturnDoubled(2));
+}
+
+//Example testing of gTest, not working right now
+/*
+TEST(TestSuite, IsAlive)
+{
+	SimMatrix simulationMatrixTest(2, FillMode::RANDOM_FILL)
+	ASSERT_EQ(simulationMatrix[0][0]->IsAlive(), false);
+} 
+*/
 
 int main()
 {
