@@ -11,7 +11,7 @@
 struct SimulationOutput
 {
 	//Ptr is not really needed ;)
-	std::unique_ptr<std::vector<SimMatrix>> matrixSteps;
+	std::vector<SimMatrix> matrixSteps;
 
 	//Also, some statistics can be gathered here
 };

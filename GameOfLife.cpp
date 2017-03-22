@@ -23,6 +23,7 @@
 SimulationOutput RunSimulation(MatrixSetup setup)
 {
 	SimMatrix simMatrix(setup.matrixSize, FillMode::RANDOM_FILL);
+	SimulationOutput simOutput;	
 	
 	std::cout << "Simulation starts..." << std::endl << std::endl;	
 
@@ -44,8 +45,17 @@ SimulationOutput RunSimulation(MatrixSetup setup)
 		//For only one "%" sign during printing simulation status
 		std::cout << std::fixed;
 		std::cout << std::setprecision(2);
-
+		
+		//Could be done in some better way ;)
+		if (setup.saveMatrixSteps)
+		{
+			simOutput.matrixSteps.push_back(simMatrix.DoSimStepReturnMatrix());
+		}
+		else
+		{
 		simMatrix.DoSimStep();
+		}
+
 		std::cout << static_cast<float>(i)/static_cast<float>(setup.stepsAmount)*100 << "%\r";
 		std::cout.flush();
 
@@ -73,8 +83,10 @@ SimulationOutput RunSimulation(MatrixSetup setup)
 	{		
 		simMatrix.PrintSimMatrix();	
 	}
-	
+
+	//Consider that this is not the end of simulation, since we are obtaining simOutput 
 	std::cout << std::endl << "Simulation has ended..." << std::endl;
+	return simOutput;
 }
 
 //Maybe change the returned type of this function to "bool" for indicationg if the operation of setting up was ended succesfully
