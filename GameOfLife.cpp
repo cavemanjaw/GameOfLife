@@ -3,6 +3,9 @@
 #include "SimMatrix.h"
 #include <iomanip>
 
+//TODO: IT SEEMS TO BE THE MOST IMPORTANT TODO, the random values of sim grid are always the same for given input
+//CHange it, seed the random, for exmaple with current time
+
 //TODO: Do here interface for concurrenty running thread with independent simulations
 
 //TODO: Also, the interface for communication with user can be implemented
