@@ -3,6 +3,8 @@
 #include "SimMatrix.h"
 #include <iomanip>
 
+//TODO:Object or interface for handling rules for dying and respawning cells
+
 //TODO: IT SEEMS TO BE THE MOST IMPORTANT TODO, the random values of sim grid are always the same for given input
 //CHange it, seed the random, for exmaple with current time
 
@@ -17,7 +19,8 @@
 //The other way is to store every simulation step - will be a huge memory allocation
 
 //Running simulation shouldnt always show the intermediate state of simulation matrix
-void RunSimulation(MatrixSetup setup)
+//Should this function return some struct for the output of siumulation?
+SimulationOutput RunSimulation(MatrixSetup setup)
 {
 	SimMatrix simMatrix(setup.matrixSize, FillMode::RANDOM_FILL);
 	
@@ -43,11 +46,13 @@ void RunSimulation(MatrixSetup setup)
 		std::cout << std::setprecision(2);
 
 		simMatrix.DoSimStep();
-		std::cout << (float)i/(float)setup.stepsAmount*100 << "%\r";
+		std::cout << static_cast<float>(i)/static_cast<float>(setup.stepsAmount)*100 << "%\r";
 		std::cout.flush();
 
 		if (setup.showSteps)
 		{
+			std::cout << "Simulation step number: " << i + 1 << std::endl;
+
 			if (setup.isPretty)
 			{
 				simMatrix.PrintSimMatrixPretty();
@@ -90,12 +95,26 @@ MatrixSetup SetSimulation()
 	std::cout << "How big the simulation matrix should be?" << std::endl;
 	std::cout << "> ";	
 	std::cin >> setup.matrixSize;
+	
+	std::cout << "Do you want to store every state of simulation matrix? [Y/n]" << std::endl;
+	
+	//Only one variable is needed?
+	char sign;
+
+	std::cout << "> ";	
+	std::cin >> sign;
+
+	if (sign == 'Y')
+	{
+		setup.saveMatrixSteps = true; 
+	}
+	else
+	{
+		setup.saveMatrixSteps = false;
+	}
 
 	std::cout << "Do you want to print the status of matrix during simulation computation? [Y/n]" << std::endl;
 	//Handle it more securly ;)	
-
-	//Only one variable is needed?
-	char sign;
 
 	std::cout << "> ";	
 	std::cin >> sign;

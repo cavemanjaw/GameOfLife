@@ -5,6 +5,7 @@ SimCell::SimCell()
 	 respawnCounter(0)
 {}
 
+//Mismatch between return type and the type of field variable
 int SimCell::GetRespawnCounter()
 {
 	return respawnCounter;

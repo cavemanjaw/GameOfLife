@@ -179,6 +179,12 @@ void SimMatrix::SetCellStatus(int x, int y, int aliveAdjacent)
 // THERE IS A NEED TO DO A COPY OF THE ARRAY AS WE ITERATE OVR IT AND CHANGE THE VALUES DURING ITERATION!!
 // Make a copy of local simMatrix, work on it, assign it to the original passed by reference
 // Consider leaking resources
+
+//Can this function be written for also returning new SimulationMatrix?
+//TODO: Consider if returning something and not assignint returned variable is more costly than 'void' function
+
+//Two of the functions can be modificated in such way to operate only on simMatrix field of SimMatrix class
+
 void SimMatrix::DoSimStep()
 {
 	SimMatrix locSimMatrix = *this;
@@ -191,4 +197,20 @@ void SimMatrix::DoSimStep()
 		}
 	}
 	*this = locSimMatrix;
+}
+
+
+SimMatrix SimMatrix::DoSimStepReturnMatrix()
+{
+	SimMatrix locSimMatrix = *this;
+
+	for (int i = 0; i < locSimMatrix.simMatrix.size(); ++i)
+	{		
+		for (int j = 0; j < locSimMatrix.simMatrix.at(i).size(); ++j)
+		{
+			locSimMatrix.SetCellStatus(i, j, AdjacentCellsAlive(i, j));
+		}
+	}
+	*this = locSimMatrix;
+	return locSimMatrix;
 }

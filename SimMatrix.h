@@ -42,6 +42,8 @@ void PrintSimMatrixPretty() const;
 
 void DoSimStep();
 
+SimMatrix DoSimStepReturnMatrix();
+
 protected:
 private:
 std::vector<std::vector<SimCell>> simMatrix;
