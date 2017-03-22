@@ -1,6 +1,7 @@
 #include "GameOfLife.h"
 #include <iostream>
 #include "SimMatrix.h"
+#include <iomanip>
 
 //TODO: Do here interface for concurrenty running thread with independent simulations
 
@@ -16,6 +17,8 @@
 void RunSimulation(MatrixSetup setup)
 {
 	SimMatrix simMatrix(setup.matrixSize, FillMode::RANDOM_FILL);
+	
+	std::cout << "Simulation starts..." << std::endl << std::endl;	
 
 	std::cout << "Initial values of simulation matrix:" << std::endl;	
 	if (setup.isPretty)
@@ -31,11 +34,14 @@ void RunSimulation(MatrixSetup setup)
 	
 	for (int i = 0; i < setup.stepsAmount; ++i)
 	{
-		simMatrix.DoSimStep();
 
-		std::cout << std::endl;
-		std::cout << (float)i/(float)setup.stepsAmount*100 << "%";
-		std::cout << std::endl;
+		//For only one "%" sign during printing simulation status
+		std::cout << std::fixed;
+		std::cout << std::setprecision(2);
+
+		simMatrix.DoSimStep();
+		std::cout << (float)i/(float)setup.stepsAmount*100 << "%\r";
+		std::cout.flush();
 
 		if (setup.showSteps)
 		{
@@ -59,6 +65,8 @@ void RunSimulation(MatrixSetup setup)
 	{		
 		simMatrix.PrintSimMatrix();	
 	}
+	
+	std::cout << std::endl << "Simulation has ended..." << std::endl;
 }
 
 //Maybe change the returned type of this function to "bool" for indicationg if the operation of setting up was ended succesfully
@@ -111,6 +119,8 @@ MatrixSetup SetSimulation()
 	{
 		setup.isPretty = false;
 	}
+	
+	std::cout << std::endl;
 
 	return setup;
 	//This idea has no big sence in my opinion, since the main function does the same
