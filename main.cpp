@@ -7,6 +7,10 @@
 //TODO: Completly rebuild main, better interface is a priority
 //Interface for making simulation can be done in GameOfLife translation unit
 
+//TODO:Write tests for covering whole project
+//TODO:Make complex interface in "GameOfLife" with concurrently running :wthreads
+
+//TODO: Possible encapsulate whole interaction with user in one function
 
 int ReturnDoubled(int number)
 {
