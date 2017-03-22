@@ -11,10 +11,13 @@
 //REverse engineering possibility, that is calculating every step backward
 //Storing only one instance of previous simMatrix is needed???
 //The other way is to store every simulation step - will be a huge memory allocation
+
+//Running simulation shouldnt always show the intermediate state of simulation matrix
 void RunSimulation(MatrixSetup setup)
 {
 	SimMatrix simMatrix(setup.matrixSize, FillMode::RANDOM_FILL);
-	
+
+	std::cout << "Initial values of simulation matrix:" << std::endl;	
 	if (setup.isPretty)
 	{
 		simMatrix.PrintSimMatrixPretty();
@@ -29,16 +32,32 @@ void RunSimulation(MatrixSetup setup)
 	for (int i = 0; i < setup.stepsAmount; ++i)
 	{
 		simMatrix.DoSimStep();
-		
-		if (setup.isPretty)
-		{
-			simMatrix.PrintSimMatrixPretty();
-		}
-		else
-		{		
-			simMatrix.PrintSimMatrix();	
-		}
+
 		std::cout << std::endl;
+		std::cout << (float)i/(float)setup.stepsAmount*100 << "%";
+		std::cout << std::endl;
+
+		if (setup.showSteps)
+		{
+			if (setup.isPretty)
+			{
+				simMatrix.PrintSimMatrixPretty();
+			}
+			else
+			{		
+				simMatrix.PrintSimMatrix();	
+			}
+		std::cout << std::endl;
+		}
+	}
+	std::cout << "Output values of simulation matrix:" << std::endl;	
+	if (setup.isPretty)
+	{
+		simMatrix.PrintSimMatrixPretty();
+	}
+	else
+	{		
+		simMatrix.PrintSimMatrix();	
 	}
 }
 
@@ -61,9 +80,26 @@ MatrixSetup SetSimulation()
 	std::cout << "> ";	
 	std::cin >> setup.matrixSize;
 
+	std::cout << "Do you want to print the status of matrix during simulation computation? [Y/n]" << std::endl;
+	//Handle it more securly ;)	
+
+	//Only one variable is needed?
+	char sign;
+
+	std::cout << "> ";	
+	std::cin >> sign;
+	
+	if (sign == 'Y')
+	{
+		setup.showSteps = true; 
+	}
+	else
+	{
+		setup.showSteps = false;
+	}
+	
 	//Handle it more securly ;)
 	std::cout << "Do you want the matrix to be printed pretty? [Y/n]" << std::endl;
-	char sign;
 	std::cout << "> ";	
 	std::cin >> sign;
 	

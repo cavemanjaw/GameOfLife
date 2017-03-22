@@ -38,7 +38,11 @@ TEST(TestSuite, IsAlive)
 
 int main()
 {
-	RunSimulation(SetSimulation());	
+	RunSimulation(SetSimulation());
+
+	//Memory of the simulation can done, one can push to the vector the previos value of simMatrix
+	//What is the obsacle?
+	//Right now it is modyfying 'this' pointer so it is not possible to get the previous vector value?	
 	std::pair<int, int> tmp;
 	
 	//tmp = simMatrix.GetMaxRespawnCell();

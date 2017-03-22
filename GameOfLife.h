@@ -4,6 +4,8 @@
 #include "SimCell.h"
 #include "SimMatrix.h"
 
+//Interface for simulation and only printing the current value of simualtion matrix
+
 //Now used struct for simulation setup
 struct MatrixSetup
 {
@@ -12,6 +14,9 @@ struct MatrixSetup
 
 	//For pretty printing, consider if is needed, if threads will execute simulation concurrently and then print the result?
 	bool isPretty;
+
+	//For choosing the option of showing simulation status for every step
+	bool showSteps;
 };
 
 //For concurrently running multiple simulations, not supported right now
