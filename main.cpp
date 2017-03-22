@@ -2,6 +2,7 @@
 #include "SimMatrix.h"
 #include <iostream>
 #include <gtest/gtest.h>
+#include <utility>
 
 //TODO: Completly rebuild main, better interface is a priority
 //Interface for making simulation can be done in GameOfLife translation unit
@@ -79,4 +80,12 @@ int main()
 		}
 		std::cout << std::endl;
 	}
+	
+	std::pair<int, int> tmp;
+	tmp = simMatrix.GetMaxRespawnCell();
+	std::cout << tmp.first << " ";
+	std::cout << tmp.second << std::endl;
+	//There is no ostream overload for std::pair 
+	//For getting the coordinates for max respawn cell
+	//std::cout << simMatrix.GetMaxRespawnCell(); 
 }

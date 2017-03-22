@@ -60,6 +60,8 @@ std::pair<int, int> SimMatrix::GetMaxRespawnCell()
 			//Can be done on iterators?
 			if (j->GetRespawnCounter() > maxRespawn)
 			{
+				//Recent bug, not assigning value to max counter
+				maxRespawn = j->GetRespawnCounter();
 				maxRespawnCellCoord.first = (i - simMatrix.begin()); 
 				maxRespawnCellCoord.second = (j - i->begin());
 			}
