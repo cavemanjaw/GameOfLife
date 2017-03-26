@@ -20,6 +20,43 @@
 
 //Running simulation shouldnt always show the intermediate state of simulation matrix
 //Should this function return some struct for the output of siumulation?
+
+//TODO: Infinite loop printing the one choosen matrix step
+void ExploreSimulationResults(SimulationOutput simResults)
+{
+	char escapeChar = 'Y';
+	while (escapeChar != 'n')
+	{
+		std::cout << "Which simulation step matrix do you want to see?" << std::endl;
+		int numberOfSimStep;
+		std::cin >> numberOfSimStep;
+		
+		if (numberOfSimStep < simResults.matrixSteps.size() && numberOfSimStep >= 0)
+		{
+			std::cout << "Do you want the matrix to be pretty printed?" << std::endl;
+			bool printPretty;	
+		
+			//Do interface for [Y/n], will be better if handled more securly ;)
+			std::cin >> printPretty;
+			if (printPretty)
+			{
+				simResults.matrixSteps[numberOfSimStep].PrintSimMatrixPretty();
+			}
+			else
+			{
+				simResults.matrixSteps[numberOfSimStep].PrintSimMatrix();
+			}
+		}
+		else
+		{
+			std::cout << "There is no such step in the results!" << std::endl;
+		}
+	std::cout << "Do you want to continue? [Y/n]" << std::endl;
+	std::cin >> escapeChar;
+	
+}
+}
+
 SimulationOutput RunSimulation(MatrixSetup setup)
 {
 	SimMatrix simMatrix(setup.matrixSize, FillMode::RANDOM_FILL);

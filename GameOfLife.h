@@ -44,6 +44,7 @@ struct SimulationSetup
 
 };
 
+void ExploreSimulationResults(SimulationOutput);
 MatrixSetup SetSimulation();
 SimulationOutput RunSimulation(MatrixSetup setup);
 

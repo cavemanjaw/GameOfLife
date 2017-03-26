@@ -38,7 +38,18 @@ TEST(TestSuite, IsAlive)
 
 int main()
 {
-	RunSimulation(SetSimulation());
+	SimulationOutput simOutput;
+
+	simOutput = RunSimulation(SetSimulation());
+
+	std::cout << "Do you want to explore simulation results? [Y/n]" << std::endl;
+	char exploreResults;
+	std::cin >> exploreResults;
+
+	if (exploreResults == 'Y')
+	{
+		ExploreSimulationResults(simOutput);	
+	}
 
 	//Memory of the simulation can done, one can push to the vector the previos value of simMatrix
 	//What is the obsacle?
