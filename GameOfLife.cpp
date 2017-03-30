@@ -33,12 +33,11 @@ void ExploreSimulationResults(SimulationOutput simResults)
 		
 		if (numberOfSimStep < simResults.matrixSteps.size() && numberOfSimStep >= 0)
 		{
-			std::cout << "Do you want the matrix to be pretty printed?" << std::endl;
-			bool printPretty;	
-		
-			//Do interface for [Y/n], will be better if handled more securly ;)
+			std::cout << "Do you want the matrix to be pretty printed? [Y/n]" << std::endl;
+			char printPretty;
 			std::cin >> printPretty;
-			if (printPretty)
+			
+			if (printPretty == 'Y')
 			{
 				simResults.matrixSteps[numberOfSimStep].PrintSimMatrixPretty();
 			}
@@ -46,15 +45,17 @@ void ExploreSimulationResults(SimulationOutput simResults)
 			{
 				simResults.matrixSteps[numberOfSimStep].PrintSimMatrix();
 			}
+		
 		}
 		else
 		{
 			std::cout << "There is no such step in the results!" << std::endl;
 		}
 	std::cout << "Do you want to continue? [Y/n]" << std::endl;
+	std::cin.clear();
 	std::cin >> escapeChar;
 	
-}
+	}
 }
 
 SimulationOutput RunSimulation(MatrixSetup setup)
