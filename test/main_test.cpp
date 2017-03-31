@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include "SimCellTest.cpp"
 //#include "../src/GameOfLife.h"
 //#include "../src/SimCell.h"
 //#include "../src/SimMatrix.h"
