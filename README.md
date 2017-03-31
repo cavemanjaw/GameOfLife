@@ -12,3 +12,6 @@ Should the test be addded to the repository?
 The test should be added in some way to exclude them from repository?
 Moduularise the tests!
 
+"src" and "test" folder
+
+make some script for building the application!
