@@ -21,3 +21,14 @@ TEST_F(SimCellTest, SetAliveTest)
 	ASSERT_EQ(true, simCell.IsAlive());
 	ASSERT_EQ(1, simCell.GetRespawnCounter());
 }
+
+TEST_F(SimCellTest, SettingAliveManyTimes)
+{
+	SimCell simCell;
+	for (int i = 0; i < 10; ++i)
+	{ 
+		simCell.SetAlive();
+	}
+	ASSERT_EQ(true, simCell.IsAlive());
+	ASSERT_EQ(1, simCell.GetRespawnCounter());
+}
