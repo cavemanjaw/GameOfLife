@@ -6,6 +6,7 @@ class SimCellTest : public testing::Test
 	virtual void TearDown() {}
 
 };
+
 TEST_F(SimCellTest, KillAndRespawnCounterInitialStatus)
 {
 	SimCell simCell;
@@ -13,6 +14,10 @@ TEST_F(SimCellTest, KillAndRespawnCounterInitialStatus)
 	ASSERT_EQ(0, simCell.GetKillCounter());
 }
 
-
-
-
+TEST_F(SimCellTest, SetAliveTest)
+{
+	SimCell simCell;
+	simCell.SetAlive();
+	ASSERT_EQ(true, simCell.IsAlive());
+	ASSERT_EQ(1, simCell.GetRespawnCounter());
+}
