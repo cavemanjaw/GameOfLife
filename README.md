@@ -15,3 +15,5 @@ Moduularise the tests!
 "src" and "test" folder
 
 make some script for building the application!
+
+script for building and check for correctness of build command
