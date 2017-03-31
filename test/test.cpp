@@ -1,10 +1,15 @@
 #include <gtest/gtest.h>
+#include "SimCellTest.cpp"
+//#include "../src/GameOfLife.h"
+//#include "../src/SimCell.h"
+//#include "../src/SimMatrix.h"
 
 int ReturnDoubled(int number)
 {
 	return number * 2;
 }
 
+//First argument is test suite, second is the name of test case
 TEST(ReturnDoubled, ZeroTest)
 {
 	ASSERT_EQ(0, ReturnDoubled(0));
@@ -20,7 +25,7 @@ TEST(ReturnDoubled, NormalNumber)
 TEST(TestSuite, IsAlive)
 {
 	SimMatrix simulationMatrixTest(2, FillMode::RANDOM_FILL)
-	ASSERT_EQ(simulationMatrix[0][0]->IsAlive(), false);
+	ASSERT_EQ(simulationMatrixTest[0][0]->IsAlive(), false);
 } 
 */
 
