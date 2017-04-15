@@ -1,6 +1,7 @@
 #include <iostream>
 #include <random>
 #include "SimMatrix.h"
+#include <time.h>
 
 //TODO: COnsider which function can be marked as "const"
 // TODO: For the abstraction type represented by class SimCell there is a need for big interface change in almost all of this functions
@@ -17,6 +18,7 @@ ResizeSimMatrix(matrixSize);
 switch(fillMode)
 {
 case RANDOM_FILL:
+	srand(time(NULL));
 	for (auto i = simMatrix.begin(); i != simMatrix.end(); ++i)
 	{		
 		for (auto j = i->begin(); j != i->end(); ++j)
