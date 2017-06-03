@@ -1,6 +1,7 @@
 #include <iostream>
 #include <random>
 #include "SimMatrix.h"
+#include "GameOfLife.h"
 #include <time.h>
 
 //TODO: COnsider which function can be marked as "const"
@@ -157,13 +158,17 @@ int SimMatrix::AdjacentCellsAlive(int x, int y) const
 // This function should work on copy!
 // Make it return the copy at the end 
 // This is possible bad idea, because it will be copied each time SetCellStatus is invoked
-void SimMatrix::SetCellStatus(int x, int y, int aliveAdjacent)
+// Pass SimulationRulesSetup here
+void SimMatrix::SetCellStatus(int x, int y, int aliveAdjacent, SimulationRulesSetup rules)
 {
-	if (simMatrix[x][y].IsAlive() == true && (aliveAdjacent == 2 || aliveAdjacent == 3))
+	if (simMatrix[x][y].IsAlive() == true &&
+		(aliveAdjacent == rules.minAliveAdjacentToKeepAlive || aliveAdjacent == rules.maxAliveAdjacentToKeepAlive))
 	{
+		// Since it is already alive this is unnecessary
 		simMatrix[x][y].SetAlive();
 	}
-	else if (simMatrix[x][y].IsAlive() == false && aliveAdjacent == 3)
+	else if (simMatrix[x][y].IsAlive() == false &&
+			 aliveAdjacent == rules.minAliveAdjacentToRespawn)
 	{
 		simMatrix[x][y].SetAlive();
 	}
@@ -187,7 +192,7 @@ void SimMatrix::SetCellStatus(int x, int y, int aliveAdjacent)
 
 //Two of the functions can be modificated in such way to operate only on simMatrix field of SimMatrix class
 
-void SimMatrix::DoSimStep()
+void SimMatrix::DoSimStep(SimulationRulesSetup rules)
 {
 	SimMatrix locSimMatrix = *this;
 
@@ -195,14 +200,14 @@ void SimMatrix::DoSimStep()
 	{		
 		for (int j = 0; j < locSimMatrix.simMatrix.at(i).size(); ++j)
 		{
-			locSimMatrix.SetCellStatus(i, j, AdjacentCellsAlive(i, j));
+			locSimMatrix.SetCellStatus(i, j, AdjacentCellsAlive(i, j), rules);
 		}
 	}
 	*this = locSimMatrix;
 }
 
 
-SimMatrix SimMatrix::DoSimStepReturnMatrix()
+SimMatrix SimMatrix::DoSimStepReturnMatrix(SimulationRulesSetup rules)
 {
 	SimMatrix locSimMatrix = *this;
 
@@ -210,7 +215,7 @@ SimMatrix SimMatrix::DoSimStepReturnMatrix()
 	{		
 		for (int j = 0; j < locSimMatrix.simMatrix.at(i).size(); ++j)
 		{
-			locSimMatrix.SetCellStatus(i, j, AdjacentCellsAlive(i, j));
+			locSimMatrix.SetCellStatus(i, j, AdjacentCellsAlive(i, j), rules);
 		}
 	}
 	*this = locSimMatrix;

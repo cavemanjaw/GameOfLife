@@ -2,6 +2,7 @@
 #define SIM_MATRIX_H
 
 #include "SimCell.h"
+#include "GameOfLife.h"
 #include <vector>
 #include <utility>
 
@@ -36,13 +37,13 @@ void RandPopulateSimMatrix();
 //Returns the amount of alive adjacent cells for given x and y coordinates
 int AdjacentCellsAlive(int x, int y) const;
 
-void SetCellStatus(int x, int y, int aliveAdjacent);
+void SetCellStatus(int x, int y, int aliveAdjacent, SimulationRulesSetup rules);
 
 void PrintSimMatrixPretty() const;
 
-void DoSimStep();
+void DoSimStep(SimulationRulesSetup rules);
 
-SimMatrix DoSimStepReturnMatrix();
+SimMatrix DoSimStepReturnMatrix(SimulationRulesSetup rules);
 
 protected:
 private:

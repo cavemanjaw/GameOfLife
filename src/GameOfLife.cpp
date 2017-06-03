@@ -87,11 +87,11 @@ SimulationOutput RunSimulation(MatrixSetup setup)
 		//Could be done in some better way ;)
 		if (setup.saveMatrixSteps)
 		{
-			simOutput.matrixSteps.push_back(simMatrix.DoSimStepReturnMatrix());
+			simOutput.matrixSteps.push_back(simMatrix.DoSimStepReturnMatrix(setup.rules));
 		}
 		else
 		{
-		simMatrix.DoSimStep();
+		simMatrix.DoSimStep(setup.rules);
 		}
 
 		std::cout << static_cast<float>(i)/static_cast<float>(setup.stepsAmount)*100 << "%\r";

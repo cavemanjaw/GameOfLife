@@ -16,6 +16,17 @@ struct SimulationOutput
 	//Also, some statistics can be gathered here
 };
 
+struct SimulationRulesSetup
+{
+	// For alive cell
+	int minAliveAdjacentToKeepAlive;
+	int maxAliveAdjacentToKeepAlive;
+
+	// For dead cell
+	int minAliveAdjacentToRespawn;
+	int maxAliveAdjacentToRespawn;
+};
+
 //Now used struct for simulation setup
 struct MatrixSetup
 {
@@ -28,6 +39,8 @@ struct MatrixSetup
 
 	//For choosing the option of showing simulation status for every step
 	bool showSteps;
+
+	SimulationRulesSetup rules;
 };
 
 //For concurrently running multiple simulations, not supported right now
