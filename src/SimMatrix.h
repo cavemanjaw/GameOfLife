@@ -12,6 +12,8 @@
 //TODO: Consider, that if you make some of the functions private it would be necessary to modify DoSimStep() function as it creates a locals var and assignes it to *this
 //TODO: Function for getting statistics of fields
 
+struct SimulationRulesSetup;
+
 //Move to GameOfLife.h?
 enum FillMode
 {

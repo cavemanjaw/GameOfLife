@@ -4,6 +4,9 @@
 #include "SimCell.h"
 #include "SimMatrix.h"
 #include <memory>
+#include <vector>
+
+class SimMatrix;
 
 //Interface for simulation and only printing the current value of simualtion matrix
 
