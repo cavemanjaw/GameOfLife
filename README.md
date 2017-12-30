@@ -20,3 +20,5 @@ script for building and check for correctness of build command
 
 TODO:
 BUG in SetCellStatus(), fix it and set filling simulation setup rules for resprawning and killing cells
+design GUI
+design textual interface, invoking with specific options
