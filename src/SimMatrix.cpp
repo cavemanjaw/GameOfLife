@@ -165,8 +165,9 @@ void SimMatrix::SetCellStatus(int x, int y, int aliveAdjacent, SimulationRulesSe
 	//TODO: Analyze this part, it could be done better :)
 	//Check the interval
 	if (isCellAlive &&
-		(aliveAdjacent >= rules.minAliveAdjacentToKeepAlive || aliveAdjacent <= rules.maxAliveAdjacentToKeepAlive))
+			(aliveAdjacent >= rules.minAliveAdjacentToKeepAlive && aliveAdjacent <= rules.maxAliveAdjacentToKeepAlive))
 	{
+		//simMatrix[x][y].SetAlive();
 		//Do nothing, cell is already alive and should be kept in this state
 	}
 	else if (isCellAlive &&
@@ -175,13 +176,14 @@ void SimMatrix::SetCellStatus(int x, int y, int aliveAdjacent, SimulationRulesSe
 		simMatrix[x][y].SetDead();
 	}
 	else if (!isCellAlive &&
-			 (aliveAdjacent >= rules.minAliveAdjacentToRespawn || aliveAdjacent <= rules.maxAliveAdjacentToRespawn))
+			(aliveAdjacent >= rules.minAliveAdjacentToRespawn && aliveAdjacent <= rules.maxAliveAdjacentToRespawn))
 	{
 		simMatrix[x][y].SetAlive();
 	}
 	else if (!isCellAlive &&
 			(aliveAdjacent < rules.minAliveAdjacentToRespawn || aliveAdjacent > rules.maxAliveAdjacentToRespawn))
 	{
+		//simMatrix[x][y].SetDead();
 		//Do nothing cell is dead and so it should be
 	}
 	else
