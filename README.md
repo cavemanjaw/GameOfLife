@@ -17,3 +17,6 @@ Moduularise the tests!
 make some script for building the application!
 
 script for building and check for correctness of build command
+
+TODO:
+BUG in SetCellStatus(), fix it and set filling simulation setup rules for resprawning and killing cells
