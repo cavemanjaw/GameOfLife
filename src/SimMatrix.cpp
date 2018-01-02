@@ -1,6 +1,7 @@
 #include <iostream>
 #include <random>
 #include "SimMatrix.h"
+#include "GameOfLife.h"
 #include <time.h>
 
 //TODO: COnsider which function can be marked as "const"
@@ -157,19 +158,38 @@ int SimMatrix::AdjacentCellsAlive(int x, int y) const
 // This function should work on copy!
 // Make it return the copy at the end 
 // This is possible bad idea, because it will be copied each time SetCellStatus is invoked
-void SimMatrix::SetCellStatus(int x, int y, int aliveAdjacent)
+// Pass SimulationRulesSetup here
+void SimMatrix::SetCellStatus(int x, int y, int aliveAdjacent, SimulationRulesSetup rules)
 {
-	if (simMatrix[x][y].IsAlive() == true && (aliveAdjacent == 2 || aliveAdjacent == 3))
+	bool isCellAlive = simMatrix[x][y].IsAlive();
+	//TODO: Analyze this part, it could be done better :)
+	//Check the interval
+	if (isCellAlive &&
+			(aliveAdjacent >= rules.minAliveAdjacentToKeepAlive && aliveAdjacent <= rules.maxAliveAdjacentToKeepAlive))
+	{
+		//simMatrix[x][y].SetAlive();
+		//Do nothing, cell is already alive and should be kept in this state
+	}
+	else if (isCellAlive &&
+			(aliveAdjacent < rules.minAliveAdjacentToKeepAlive || aliveAdjacent > rules.maxAliveAdjacentToKeepAlive))
+	{
+		simMatrix[x][y].SetDead();
+	}
+	else if (!isCellAlive &&
+			(aliveAdjacent >= rules.minAliveAdjacentToRespawn && aliveAdjacent <= rules.maxAliveAdjacentToRespawn))
 	{
 		simMatrix[x][y].SetAlive();
 	}
-	else if (simMatrix[x][y].IsAlive() == false && aliveAdjacent == 3)
+	else if (!isCellAlive &&
+			(aliveAdjacent < rules.minAliveAdjacentToRespawn || aliveAdjacent > rules.maxAliveAdjacentToRespawn))
 	{
-		simMatrix[x][y].SetAlive();
+		//simMatrix[x][y].SetDead();
+		//Do nothing cell is dead and so it should be
 	}
 	else
 	{
-		simMatrix[x][y].SetDead();
+		//Should not happen
+		//TODO:Add assert
 	}
 }
 
@@ -187,7 +207,7 @@ void SimMatrix::SetCellStatus(int x, int y, int aliveAdjacent)
 
 //Two of the functions can be modificated in such way to operate only on simMatrix field of SimMatrix class
 
-void SimMatrix::DoSimStep()
+void SimMatrix::DoSimStep(SimulationRulesSetup rules)
 {
 	SimMatrix locSimMatrix = *this;
 
@@ -195,14 +215,14 @@ void SimMatrix::DoSimStep()
 	{		
 		for (int j = 0; j < locSimMatrix.simMatrix.at(i).size(); ++j)
 		{
-			locSimMatrix.SetCellStatus(i, j, AdjacentCellsAlive(i, j));
+			locSimMatrix.SetCellStatus(i, j, AdjacentCellsAlive(i, j), rules);
 		}
 	}
 	*this = locSimMatrix;
 }
 
 
-SimMatrix SimMatrix::DoSimStepReturnMatrix()
+SimMatrix SimMatrix::DoSimStepReturnMatrix(SimulationRulesSetup rules)
 {
 	SimMatrix locSimMatrix = *this;
 
@@ -210,7 +230,7 @@ SimMatrix SimMatrix::DoSimStepReturnMatrix()
 	{		
 		for (int j = 0; j < locSimMatrix.simMatrix.at(i).size(); ++j)
 		{
-			locSimMatrix.SetCellStatus(i, j, AdjacentCellsAlive(i, j));
+			locSimMatrix.SetCellStatus(i, j, AdjacentCellsAlive(i, j), rules);
 		}
 	}
 	*this = locSimMatrix;

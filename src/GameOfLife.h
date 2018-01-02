@@ -4,6 +4,9 @@
 #include "SimCell.h"
 #include "SimMatrix.h"
 #include <memory>
+#include <vector>
+
+class SimMatrix;
 
 //Interface for simulation and only printing the current value of simualtion matrix
 
@@ -14,6 +17,17 @@ struct SimulationOutput
 	std::vector<SimMatrix> matrixSteps;
 
 	//Also, some statistics can be gathered here
+};
+
+struct SimulationRulesSetup
+{
+	// For alive cell
+	int minAliveAdjacentToKeepAlive;
+	int maxAliveAdjacentToKeepAlive;
+
+	// For dead cell
+	int minAliveAdjacentToRespawn;
+	int maxAliveAdjacentToRespawn;
 };
 
 //Now used struct for simulation setup
@@ -28,6 +42,8 @@ struct MatrixSetup
 
 	//For choosing the option of showing simulation status for every step
 	bool showSteps;
+
+	SimulationRulesSetup rules;
 };
 
 //For concurrently running multiple simulations, not supported right now
@@ -47,6 +63,10 @@ struct SimulationSetup
 void ExploreSimulationResults(SimulationOutput);
 MatrixSetup SetSimulation();
 SimulationOutput RunSimulation(MatrixSetup setup);
+
+//This could be done by constructor when SimulationRulesSetup will be changed from struct to class
+void SetSimulationRules(SimulationRulesSetup& rulesSetup);
+void SetDefaultSimulationRules(SimulationRulesSetup& rulesSetup);
 
 // This should be placed higher than in SimMatrix class
 // Not sure, since right now it modifies only one object of SimMatrix type, pushing the simulation one step forward

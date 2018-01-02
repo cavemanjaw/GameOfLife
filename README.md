@@ -17,3 +17,14 @@ Moduularise the tests!
 make some script for building the application!
 
 script for building and check for correctness of build command
+
+//Tests could be compiled also by typing:
+g++ InputParameterParser_test.cpp ../src/InputParameterParser.cpp ../src/InputParameterParser.h -I $GTEST_HOME/include -L $GTEST_HOME/lib -lgtest -lgtest_main -lpthread -std=c++11
+
+TODO:
+BUG in SetCellStatus(), fix it and set filling simulation setup rules for resprawning and killing cells
+design GUI
+design textual interface, invoking with specific options
+BUG: Current bug that manifests in not correnct vaues of cells in simulation is propably because we are working on copy and not setting proper cell status in SetCellStatus
+due to the fact, that functions that deal with state increase statistyics, such as the respawnCounter, but 
+or it is not so...

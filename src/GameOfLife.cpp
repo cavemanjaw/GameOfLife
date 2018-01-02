@@ -87,11 +87,11 @@ SimulationOutput RunSimulation(MatrixSetup setup)
 		//Could be done in some better way ;)
 		if (setup.saveMatrixSteps)
 		{
-			simOutput.matrixSteps.push_back(simMatrix.DoSimStepReturnMatrix());
+			simOutput.matrixSteps.push_back(simMatrix.DoSimStepReturnMatrix(setup.rules));
 		}
 		else
 		{
-		simMatrix.DoSimStep();
+		simMatrix.DoSimStep(setup.rules);
 		}
 
 		std::cout << static_cast<float>(i)/static_cast<float>(setup.stepsAmount)*100 << "%\r";
@@ -125,6 +125,42 @@ SimulationOutput RunSimulation(MatrixSetup setup)
 	//Consider that this is not the end of simulation, since we are obtaining simOutput 
 	std::cout << std::endl << "Simulation has ended..." << std::endl;
 	return simOutput;
+}
+
+void SetSimulationRules(SimulationRulesSetup& rulesSetup)
+{
+	int number;
+
+	std::cout << "How many alive adjacent should there minimally be to keep cell alive? [integer]" << std::endl;
+	std::cout << "> ";
+	std::cin >> number;
+	rulesSetup.minAliveAdjacentToKeepAlive = number;
+
+	std::cout << "How many alive adjacent should there maximally be to keep cell alive? [integer]" << std::endl;
+	std::cout << "> ";
+	std::cin >> number;
+	rulesSetup.maxAliveAdjacentToKeepAlive = number;
+
+	std::cout << "How many alive adjacent should there minimally be to respawn dead cell? [integer]" << std::endl;
+	std::cout << "> ";
+	std::cin >> number;
+	rulesSetup.minAliveAdjacentToRespawn = number;
+
+	std::cout << "How many alive adjacent should there minimally be to respawn dead cell? [integer]" << std::endl;
+	std::cout << "> ";
+	std::cin >> number;
+	rulesSetup.maxAliveAdjacentToRespawn = number;
+}
+
+void SetDefaultSimulationRules(SimulationRulesSetup& rulesSetup)
+{
+	//For alive cell
+	rulesSetup.minAliveAdjacentToKeepAlive = 2;
+	rulesSetup.maxAliveAdjacentToKeepAlive = 3;
+
+	// For dead cell
+	rulesSetup.minAliveAdjacentToRespawn = 3;
+	rulesSetup.maxAliveAdjacentToRespawn = 3;
 }
 
 //Maybe change the returned type of this function to "bool" for indicationg if the operation of setting up was ended succesfully
@@ -192,6 +228,18 @@ MatrixSetup SetSimulation()
 		setup.isPretty = false;
 	}
 	
+	//For setting simulation rules
+	std::cout << "Do you want to set custom simulation rules? [Y/n]" << std::endl;
+	std::cout << "> ";
+	std::cin >> sign;
+	if (sign == 'Y')
+	{
+		SetSimulationRules(setup.rules);
+	}
+	else
+	{
+		SetDefaultSimulationRules(setup.rules);
+	}
 	std::cout << std::endl;
 
 	return setup;
