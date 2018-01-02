@@ -3,6 +3,7 @@
 
 #include "SimCell.h"
 #include "SimMatrix.h"
+#include "InputParameterParser.h"
 #include <memory>
 #include <vector>
 
@@ -62,6 +63,7 @@ struct SimulationSetup
 
 void ExploreSimulationResults(SimulationOutput);
 MatrixSetup SetSimulation();
+MatrixSetup SetSimulationFromParameters(const InputParameterParser& parserInstance);
 SimulationOutput RunSimulation(MatrixSetup setup);
 
 //This could be done by constructor when SimulationRulesSetup will be changed from struct to class

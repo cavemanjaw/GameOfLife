@@ -11,7 +11,7 @@ InputParameterParser::InputParameterParser(const int& argc, const char** argv)
 
 //Return bool and the number of token that was used? This would prevent searching the parameter two times
 //Or just call proper function when you know at compile time if you would need to extract the value from token
-bool InputParameterParser::IsParameterProvided(const InputParameter& parameter)
+bool InputParameterParser::IsParameterProvided(const InputParameter& parameter) const
 {
 	//Search for parameter in created tokens
 	for (auto& token: tokens)
@@ -35,7 +35,7 @@ bool InputParameterParser::IsParameterProvided(const InputParameter& parameter)
 }
 
 
-int InputParameterParser::GetParameterIntegerValue(const InputParameter& parameter)
+int InputParameterParser::GetParameterIntegerValue(const InputParameter& parameter) const
 {
 
 	//Search for parameter in created tokens
@@ -62,7 +62,7 @@ int InputParameterParser::GetParameterIntegerValue(const InputParameter& paramet
 	return -1;
 }
 
-std::vector<int> InputParameterParser::GetParameterIntegerPackValue(const InputParameter& parameter)
+std::vector<int> InputParameterParser::GetParameterIntegerPackValue(const InputParameter& parameter) const
 {
 	std::vector<int> parameterPack;
 	//Search for parameter in created tokens
@@ -81,7 +81,7 @@ std::vector<int> InputParameterParser::GetParameterIntegerPackValue(const InputP
 			while (endPosition != std::string::npos)
 			{
 				startPosition = isolatedParameterPack.find_first_of("0123456789", startPosition);
-				endPosition = isolatedParameterPack.find_first_of(" ", startPosition);
+				endPosition = isolatedParameterPack.find_first_of(",", startPosition);
 				parameterPack.push_back(std::stoi(isolatedParameterPack.substr(startPosition, endPosition)));
 				startPosition = endPosition;
 			}

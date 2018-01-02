@@ -2,6 +2,7 @@
 #include <iostream>
 #include "SimMatrix.h"
 #include <iomanip>
+#include "InputParameterParser.h"
 
 //TODO:Object or interface for handling rules for dying and respawning cells
 
@@ -161,6 +162,64 @@ void SetDefaultSimulationRules(SimulationRulesSetup& rulesSetup)
 	// For dead cell
 	rulesSetup.minAliveAdjacentToRespawn = 3;
 	rulesSetup.maxAliveAdjacentToRespawn = 3;
+}
+
+MatrixSetup SetSimulationFromParameters(const InputParameterParser& parserInstance)
+{
+	MatrixSetup setup;
+
+	//For ParameterCharacter::BOOL false will be returned if no arg is found
+	setup.saveMatrixSteps = parserInstance.IsParameterProvided(parameters[STORE_RESULTS]);
+	setup.isPretty = parserInstance.IsParameterProvided(parameters[PRINT_PRETTY]);
+	setup.showSteps = parserInstance.IsParameterProvided(parameters[PRINT_STATUS]);
+
+	//For ParameterCharacter::INTEGER -1 will be returned if no value provided
+	setup.stepsAmount = parserInstance.GetParameterIntegerValue(parameters[STEPS]);
+	setup.stepsAmount = (setup.stepsAmount != -1) ? setup.stepsAmount : 10;
+	setup.matrixSize = parserInstance.GetParameterIntegerValue(parameters[SIZE]);
+	setup.matrixSize = (setup.matrixSize != -1) ? setup.matrixSize : 10;
+
+	std::vector<int> simulationRules = parserInstance.GetParameterIntegerPackValue(parameters[RULES]);
+
+	//TODO: Ugly, any better solution?
+	if (simulationRules.size() > 0)
+	{
+	setup.rules.minAliveAdjacentToKeepAlive = simulationRules.at(0);
+	}
+	else
+	{
+		setup.rules.minAliveAdjacentToKeepAlive = 2;
+	}
+
+	if (simulationRules.size() > 1)
+	{
+		setup.rules.maxAliveAdjacentToKeepAlive = simulationRules.at(1);
+	}
+	else
+	{
+		setup.rules.maxAliveAdjacentToKeepAlive = 3;
+	}
+
+	if (simulationRules.size() > 2)
+	{
+		setup.rules.minAliveAdjacentToRespawn = simulationRules.at(2);
+	}
+	else
+	{
+		setup.rules.minAliveAdjacentToRespawn = 3;
+	}
+
+	if (simulationRules.size() > 3)
+	{
+		setup.rules.maxAliveAdjacentToRespawn = simulationRules.at(3);
+	}
+	else
+	{
+		setup.rules.maxAliveAdjacentToRespawn = 3;
+	}
+
+	return setup;
+
 }
 
 //Maybe change the returned type of this function to "bool" for indicationg if the operation of setting up was ended succesfully

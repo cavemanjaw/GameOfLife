@@ -1,5 +1,6 @@
 #include "GameOfLife.h"
 #include "SimMatrix.h"
+#include "InputParameterParser.h"
 #include <iostream>
 
 //TODO: Completly rebuild main, better interface is a priority
@@ -10,11 +11,22 @@
 
 //TODO: Possible encapsulate whole interaction with user in one function
 
-int main()
+int main(int argc, const char* argv[])
 {
 	SimulationOutput simOutput;
 
-	simOutput = RunSimulation(SetSimulation());
+	//TODO: simOutput is actually on the stack, investigate what optimizations could be made
+
+	//If some arguments have been passed do not use the menu, parse and pass the parameters instead
+	if (argc > 1)
+	{
+		InputParameterParser parserInstance(argc, argv);
+		simOutput = RunSimulation(SetSimulationFromParameters(parserInstance));
+	}
+	else
+	{
+		simOutput = RunSimulation(SetSimulation());
+	}
 
 	std::cout << "Do you want to explore simulation results? [Y/n]" << std::endl;
 	char exploreResults;
