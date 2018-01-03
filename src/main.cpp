@@ -14,27 +14,35 @@
 int main(int argc, const char* argv[])
 {
 	SimulationOutput simOutput;
+	InputParameterParser parserInstance(argc, argv);
 
 	//TODO: simOutput is actually on the stack, investigate what optimizations could be made
 
 	//If some arguments have been passed do not use the menu, parse and pass the parameters instead
+
+	//TODO: General branching for use-the-parser and do-not-use-the-parser should be done here
 	if (argc > 1)
 	{
-		InputParameterParser parserInstance(argc, argv);
 		simOutput = RunSimulation(SetSimulationFromParameters(parserInstance));
+
+		if(parserInstance.IsParameterProvided(parameters[EXPLORE_RESULTS]))
+		{
+			ExploreSimulationResults(simOutput);
+		}
 	}
 	else
 	{
 		simOutput = RunSimulation(SetSimulation());
-	}
 
-	std::cout << "Do you want to explore simulation results? [Y/n]" << std::endl;
-	char exploreResults;
-	std::cin >> exploreResults;
+		//Menu for exploring simulation results
+		std::cout << "Do you want to explore simulation results? [Y/n]" << std::endl;
+		char exploreResults;
+		std::cin >> exploreResults;
 
-	if (exploreResults == 'Y')
-	{
-		ExploreSimulationResults(simOutput);	
+		if (exploreResults == 'Y')
+		{
+			ExploreSimulationResults(simOutput);
+		}
 	}
 
 	//Memory of the simulation can done, one can push to the vector the previos value of simMatrix

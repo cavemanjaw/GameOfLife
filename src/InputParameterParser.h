@@ -6,7 +6,7 @@
 #include <array>
 #include <assert.h>
 
-#define NUMBER_OF_PARAMETERS 6
+#define NUMBER_OF_PARAMETERS 7
 
 //There is not use of this enum right now
 enum ParameterCharacter
@@ -31,11 +31,9 @@ enum ParameterType
 	STORE_RESULTS = 3,
 	PRINT_STATUS = 4,
 	RULES = 5,
-	NO_OF_PARAMETER_TYPES = 6
+	EXPLORE_RESULTS = 6,
+	NO_OF_PARAMETER_TYPES = 7
 };
-
-static_assert(NUMBER_OF_PARAMETERS == NO_OF_PARAMETER_TYPES,
-			  "Number of parameters in parameters variable have to match ParameterType enum items!");
 
 //Parse first parameter and apply
 //Strings cannot be constexpr? They do allocation, so we won't be able to calculate the position of
@@ -47,8 +45,14 @@ const std::array<InputParameter, NUMBER_OF_PARAMETERS> parameters =
 			{"--print-pretty", BOOL},
 			{"--store-results", BOOL},
 			{"--print-status", BOOL},
-			{"--rules=", INTEGER_PACK}
+			{"--rules=", INTEGER_PACK},
+			{"--explore-results", BOOL}
 	}};
+
+static_assert(NUMBER_OF_PARAMETERS == NO_OF_PARAMETER_TYPES,
+		      //&& NUMBER_OF_PARAMETERS == parameters.size(), //TODO: parameters cannot be constexpr, so we cannot check this
+			  //at the compile time, parameters hold std::string which cannot be constexpr
+			  "Number of parameters in parameters variable have to match ParameterType enum items!");
 
 class InputParameterParser
 {
