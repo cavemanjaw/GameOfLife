@@ -44,7 +44,7 @@ TARGET_SOURCES := $(shell find src/ -name "*.cpp")
 TARGET_OBJECTS := $(patsubst %.cpp, %.o, $(TARGET_SOURCES))
 
 TEST_SOURCES := $(shell find test/ -name "*.cpp")
-TEST_OBJECTS := $(patsubst %.cpp, %.o, $(TARGET_SOURCES))
+TEST_OBJECTS := $(patsubst %.cpp, %.o, $(TEST_SOURCES))
 
 all: target test
 
