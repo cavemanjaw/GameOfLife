@@ -40,10 +40,10 @@ CXX := g++
 CXXFLAGS := -Wall -g3
 CXXFLAGS := -Wall -std=c++11
 
-TARGET_SOURCES := $(shell find . -maxdepth 1 -name "*.cpp")
+TARGET_SOURCES := $(shell find src/ -name "*.cpp")
 TARGET_OBJECTS := $(patsubst %.cpp, %.o, $(TARGET_SOURCES))
 
-TEST_SOURCES := $(shell find . -maxdepth 1 -name "*.cpp")
+TEST_SOURCES := $(shell find test/ -name "*.cpp")
 TEST_OBJECTS := $(patsubst %.cpp, %.o, $(TARGET_SOURCES))
 
 all: target test
