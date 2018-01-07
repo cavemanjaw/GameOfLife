@@ -44,9 +44,13 @@ TARGET_SOURCES := $(shell find src/ -name "*.cpp")
 TARGET_OBJECTS := $(patsubst %.cpp, %.o, $(TARGET_SOURCES))
 
 TEST_SOURCES := $(shell find test/ -name "*.cpp")
+#Filter out main_test.cpp for now, tests are written only for arguments parser for now
+TEST_SOURCES := $(filter-out test/main_test.cpp, $(TEST_SOURCES))
 TEST_OBJECTS := $(patsubst %.cpp, %.o, $(TEST_SOURCES))
 
 all: target test
+#may be a problem
+test: CXXFLAGS += -I $$GTEST_HOME/include -L $$GTEST_HOME/lib -lgtest -lgtest_main -lpthread 
 
 target: $(EXECUTABLE)
 test: $(TEST_EXECUTABLE)
