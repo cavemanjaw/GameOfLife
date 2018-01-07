@@ -49,7 +49,7 @@ TEST_SOURCES := $(shell find test/ -name "*.cpp")
 TEST_SOURCES := $(filter-out test/main_test.cpp test/SimCell_test.cpp, $(TEST_SOURCES))
 
 #Add those files under test from ./src
-TEST_SOURCES += src/InputParameterParser.cpp src/InputParameterParser.h 
+TEST_SOURCES += src/InputParameterParser.cpp
 
 TEST_OBJECTS := $(patsubst %.cpp, %.o, $(TEST_SOURCES))
 
@@ -73,8 +73,10 @@ depend: .depend
 	        $(CXX) $(CXXFLAGS) -MM $^>>./.depend;
 
 clean:
-	    rm -f $(TARGET_OBJECTS)
-
+	#Deleting source object files
+	rm -f $(TARGET_OBJECTS)
+	#Deleting test object files
+	rm -f $(TEST_OBJECTS)
 dist-clean: clean
 	   rm -f *~ .depend
 
