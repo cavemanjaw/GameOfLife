@@ -44,13 +44,18 @@ TARGET_SOURCES := $(shell find src/ -name "*.cpp")
 TARGET_OBJECTS := $(patsubst %.cpp, %.o, $(TARGET_SOURCES))
 
 TEST_SOURCES := $(shell find test/ -name "*.cpp")
-#Filter out main_test.cpp for now, tests are written only for arguments parser for now
-TEST_SOURCES := $(filter-out test/main_test.cpp, $(TEST_SOURCES))
+
+#Filter out main_test.cpp and SimCell_test.cpp for now, tests are written only for arguments parser for now
+TEST_SOURCES := $(filter-out test/main_test.cpp test/SimCell_test.cpp, $(TEST_SOURCES))
+
+#Add those files under test from ./src
+TEST_SOURCES += src/InputParameterParser.cpp src/InputParameterParser.h 
+
 TEST_OBJECTS := $(patsubst %.cpp, %.o, $(TEST_SOURCES))
 
 all: target test
-#may be a problem
-test: CXXFLAGS += -I $$GTEST_HOME/include -L $$GTEST_HOME/lib -lgtest -lgtest_main -lpthread 
+#May be a problem, the order of arguments matters for linkage of the test part of project
+GTEST_FLAGS := -I $$GTEST_HOME/include -L $$GTEST_HOME/lib -lgtest -lgtest_main -lpthread 
 
 target: $(EXECUTABLE)
 test: $(TEST_EXECUTABLE)
@@ -59,7 +64,7 @@ $(EXECUTABLE): $(TARGET_OBJECTS)
 	    $(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(EXECUTABLE) $(TARGET_OBJECTS) $(LDLIBS)
 
 $(TEST_EXECUTABLE): $(TEST_OBJECTS)
-	    $(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(TEST_EXECUTABLE) $(TEST_OBJECTS) $(LDLIBS)
+	    $(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(TEST_EXECUTABLE) $(TEST_OBJECTS) $(LDLIBS) $(GTEST_FLAGS)
 
 depend: .depend
 
