@@ -69,6 +69,7 @@ SimulationOutput RunSimulation(MatrixSetup setup);
 //This could be done by constructor when SimulationRulesSetup will be changed from struct to class
 void SetSimulationRules(SimulationRulesSetup& rulesSetup);
 void SetDefaultSimulationRules(SimulationRulesSetup& rulesSetup);
+void PrintProgramHelp();
 
 // This should be placed higher than in SimMatrix class
 // Not sure, since right now it modifies only one object of SimMatrix type, pushing the simulation one step forward

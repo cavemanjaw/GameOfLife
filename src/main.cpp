@@ -20,6 +20,14 @@ int main(int argc, const char* argv[])
 
 	//If some arguments have been passed do not use the menu, parse and pass the parameters instead
 
+	//TODO: Do better handling of initial start menu of program
+	if (parserInstance.IsParameterProvided(parameters[HELP]))
+	{
+		PrintProgramHelp();
+		//Handle this menu in a loop?
+		return 0;
+	}
+
 	//TODO: General branching for use-the-parser and do-not-use-the-parser should be done here
 	if (argc > 1)
 	{

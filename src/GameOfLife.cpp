@@ -306,3 +306,8 @@ MatrixSetup SetSimulation()
 	//This should return some object, more structure, for holding parameters for simulation?
 	//Maybe also checking will be done if the simulation is valid and proper set up can be made
 }
+
+void PrintProgramHelp()
+{
+	std::cout << "To write help function!";
+}
