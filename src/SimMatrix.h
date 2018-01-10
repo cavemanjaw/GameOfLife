@@ -2,6 +2,7 @@
 #define SIM_MATRIX_H
 
 #include "SimCell.h"
+#include "GameOfLife.h"
 #include <vector>
 #include <utility>
 
@@ -10,6 +11,8 @@
 //TODO: Which of function make private?
 //TODO: Consider, that if you make some of the functions private it would be necessary to modify DoSimStep() function as it creates a locals var and assignes it to *this
 //TODO: Function for getting statistics of fields
+
+struct SimulationRulesSetup;
 
 //Move to GameOfLife.h?
 enum FillMode
@@ -36,13 +39,13 @@ void RandPopulateSimMatrix();
 //Returns the amount of alive adjacent cells for given x and y coordinates
 int AdjacentCellsAlive(int x, int y) const;
 
-void SetCellStatus(int x, int y, int aliveAdjacent);
+void SetCellStatus(int x, int y, int aliveAdjacent, SimulationRulesSetup rules);
 
 void PrintSimMatrixPretty() const;
 
-void DoSimStep();
+void DoSimStep(SimulationRulesSetup rules);
 
-SimMatrix DoSimStepReturnMatrix();
+SimMatrix DoSimStepReturnMatrix(SimulationRulesSetup rules);
 
 protected:
 private:

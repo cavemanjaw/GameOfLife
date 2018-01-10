@@ -1,8 +1,7 @@
 #include "GameOfLife.h"
 #include "SimMatrix.h"
+#include "InputParameterParser.h"
 #include <iostream>
-#include <gtest/gtest.h>
-#include <utility>
 
 //TODO: Completly rebuild main, better interface is a priority
 //Interface for making simulation can be done in GameOfLife translation unit
@@ -12,43 +11,46 @@
 
 //TODO: Possible encapsulate whole interaction with user in one function
 
-int ReturnDoubled(int number)
-{
-	return number * 2;
-}
-
-TEST(ReturnDoubled, ZeroTest)
-{
-	ASSERT_EQ(0, ReturnDoubled(0));
-}
-
-TEST(ReturnDoubled, NormalNumber)
-{
-	ASSERT_EQ(4, ReturnDoubled(2));
-}
-
-//Example testing of gTest, not working right now
-/*
-TEST(TestSuite, IsAlive)
-{
-	SimMatrix simulationMatrixTest(2, FillMode::RANDOM_FILL)
-	ASSERT_EQ(simulationMatrix[0][0]->IsAlive(), false);
-} 
-*/
-
-int main()
+int main(int argc, const char* argv[])
 {
 	SimulationOutput simOutput;
+	InputParameterParser parserInstance(argc, argv);
 
-	simOutput = RunSimulation(SetSimulation());
+	//TODO: simOutput is actually on the stack, investigate what optimizations could be made
 
-	std::cout << "Do you want to explore simulation results? [Y/n]" << std::endl;
-	char exploreResults;
-	std::cin >> exploreResults;
+	//If some arguments have been passed do not use the menu, parse and pass the parameters instead
 
-	if (exploreResults == 'Y')
+	//TODO: Do better handling of initial start menu of program
+	if (parserInstance.IsParameterProvided(parameters[HELP]))
 	{
-		ExploreSimulationResults(simOutput);	
+		PrintProgramHelp();
+		//Handle this menu in a loop?
+		return 0;
+	}
+
+	//TODO: General branching for use-the-parser and do-not-use-the-parser should be done here
+	if (argc > 1)
+	{
+		simOutput = RunSimulation(SetSimulationFromParameters(parserInstance));
+
+		if(parserInstance.IsParameterProvided(parameters[EXPLORE_RESULTS]))
+		{
+			ExploreSimulationResults(simOutput);
+		}
+	}
+	else
+	{
+		simOutput = RunSimulation(SetSimulation());
+
+		//Menu for exploring simulation results
+		std::cout << "Do you want to explore simulation results? [Y/n]" << std::endl;
+		char exploreResults;
+		std::cin >> exploreResults;
+
+		if (exploreResults == 'Y')
+		{
+			ExploreSimulationResults(simOutput);
+		}
 	}
 
 	//Memory of the simulation can done, one can push to the vector the previos value of simMatrix
