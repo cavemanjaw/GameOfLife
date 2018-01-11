@@ -6,12 +6,7 @@
 
 //TODO:Object or interface for handling rules for dying and respawning cells
 
-//TODO: IT SEEMS TO BE THE MOST IMPORTANT TODO, the random values of sim grid are always the same for given input
-//CHange it, seed the random, for exmaple with current time
-
 //TODO: Do here interface for concurrenty running thread with independent simulations
-
-//TODO: Also, the interface for communication with user can be implemented
 
 //TODO: THIS IS BIG TODO: REVERSE ENGINEERING
 //Enable the possibility for showing every simulated step, investigate:
@@ -19,13 +14,11 @@
 //Storing only one instance of previous simMatrix is needed???
 //The other way is to store every simulation step - will be a huge memory allocation
 
-//Running simulation shouldnt always show the intermediate state of simulation matrix
-//Should this function return some struct for the output of siumulation?
-
-//TODO: Infinite loop printing the one choosen matrix step
 void ExploreSimulationResults(SimulationOutput simResults)
 {
 	char escapeChar = 'Y';
+
+	//Loop for printing choosen matrix step
 	while (escapeChar != 'n')
 	{
 		std::cout << "Which simulation step matrix do you want to see?" << std::endl;
@@ -222,8 +215,7 @@ MatrixSetup SetSimulationFromParameters(const InputParameterParser& parserInstan
 
 }
 
-//Maybe change the returned type of this function to "bool" for indicationg if the operation of setting up was ended succesfully
-//Setting up the simulation will not take any arguments? And do not return anything?
+
 MatrixSetup SetSimulation()
 {
 	MatrixSetup setup;
@@ -301,11 +293,10 @@ MatrixSetup SetSimulation()
 	}
 	std::cout << std::endl;
 
+	//Return calculated sumulation setup, can be used to pass it to RunSimulation()
 	return setup;
-	//This idea has no big sence in my opinion, since the main function does the same
-	//This should return some object, more structure, for holding parameters for simulation?
-	//Maybe also checking will be done if the simulation is valid and proper set up can be made
 }
+
 
 void PrintProgramHelp()
 {

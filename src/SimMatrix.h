@@ -25,44 +25,40 @@ enum FillMode
 class SimMatrix
 {
 public:
-// Provide enum for chosing how to fill simulation grid
-SimMatrix(int matrixSize, FillMode fillMode);
+	SimMatrix(int matrixSize, FillMode fillMode);
 
-std::pair<int, int> GetMaxRespawnCell();
+	std::pair<int, int> GetMaxRespawnCell();
 
-void PrintSimMatrix() const;
+	void PrintSimMatrix() const;
 
-void RandPopulateSimMatrix();
+	void RandPopulateSimMatrix();
 
-// Only squared matrixes supported right now
+	// Only squared matrixes supported right now
 
-//Returns the amount of alive adjacent cells for given x and y coordinates
-int AdjacentCellsAlive(int x, int y) const;
+	//Returns the amount of alive adjacent cells for given x and y coordinates
+	int AdjacentCellsAlive(int x, int y) const;
 
-void SetCellStatus(int x, int y, int aliveAdjacent, SimulationRulesSetup rules);
+	void SetCellStatus(int x, int y, int aliveAdjacent, SimulationRulesSetup rules);
 
-void PrintSimMatrixPretty() const;
+	void PrintSimMatrixPretty() const;
 
-void DoSimStep(SimulationRulesSetup rules);
+	void DoSimStep(SimulationRulesSetup rules);
 
-SimMatrix DoSimStepReturnMatrix(SimulationRulesSetup rules);
+	SimMatrix DoSimStepReturnMatrix(SimulationRulesSetup rules);
 
 protected:
 private:
-std::vector<std::vector<SimCell>> simMatrix;
-	
-void ResizeSimMatrix(int size);
+	std::vector<std::vector<SimCell>> simMatrix;
+
+	void ResizeSimMatrix(int size);
 
 };
 //TODO: Add const qualifiers for increasing security
 
-//TODO: Encapsulate sim_matrix in a class with methods to get better interface and firlds for statisticd
+//TODO: Encapsulate sim_matrix in a class with methods to get better interface and fields for statistics
 
 //TODO: Create entire class of SimCell to obtain statistics and encaplsulate fields for better interface handling
 
 //TODO: Make possible not squared matrixes to simulate
-
-
-
 
 #endif

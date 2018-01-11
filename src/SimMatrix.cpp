@@ -4,9 +4,8 @@
 #include "GameOfLife.h"
 #include <time.h>
 
-//TODO: COnsider which function can be marked as "const"
-// TODO: For the abstraction type represented by class SimCell there is a need for big interface change in almost all of this functions
-// This could be done with constructors for random initailize values in matrix simulation grid, changes need to me made in SimCell class
+//TODO: Consider which function can be "const" qualified
+//TODO: For the abstraction type represented by class SimCell there is a need for big interface change in almost all of this functions
 
 SimMatrix::SimMatrix(int matrixSize, FillMode fillMode)
 {
@@ -133,13 +132,13 @@ int SimMatrix::AdjacentCellsAlive(int x, int y) const
 	// For now only squared matrix are supported
 	int N = simMatrix.size();
 
-	// Variable for counting alive adjescent cells
+	// Variable for counting alive adjacent cells
 	int aliveAdjacent = 0;
 	for (int i = x - 1; i <= x + 1; ++i)
 	{
 		for (int j = y - 1; j <= y + 1; ++j)
 		{
-			// Check if cell is not out of bound and analyzed cell
+			// Check if cell is not out of bound and is not the cell we are checking itself
 			if ((i >= 0 && i < N) && (j >= 0 && j < N) && !(x == i && y == i))
 			{
 				if (simMatrix[i][j].IsAlive() == true)
@@ -152,7 +151,7 @@ int SimMatrix::AdjacentCellsAlive(int x, int y) const
 	return aliveAdjacent;
 }
 
-// How about modifying and checkint with passing an iterator for cell??
+// How about modifying and checking with passing an iterator for cell??
 // Function decides if cell is alive or dead at next step
 
 // This function should work on copy!

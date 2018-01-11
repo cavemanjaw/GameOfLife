@@ -14,9 +14,7 @@ class SimMatrix;
 //Make it a class, so there are possible actions to take for the output
 struct SimulationOutput
 {
-	//Ptr is not really needed ;)
 	std::vector<SimMatrix> matrixSteps;
-
 	//Also, some statistics can be gathered here
 };
 
@@ -31,7 +29,7 @@ struct SimulationRulesSetup
 	int maxAliveAdjacentToRespawn;
 };
 
-//Now used struct for simulation setup
+//Currently used struct for simulation setup
 struct MatrixSetup
 {
 	bool saveMatrixSteps;
@@ -44,6 +42,7 @@ struct MatrixSetup
 	//For choosing the option of showing simulation status for every step
 	bool showSteps;
 
+	//Struct for custom simulation rules
 	SimulationRulesSetup rules;
 };
 
@@ -58,7 +57,6 @@ struct SimulationSetup
 	std::vector<MatrixSetup> instanceSetup;
 
 	//Any non-redundant info, that is information that cant be derived form above defined vector?
-
 };
 
 void ExploreSimulationResults(SimulationOutput);
@@ -75,12 +73,10 @@ void PrintProgramHelp();
 // Not sure, since right now it modifies only one object of SimMatrix type, pushing the simulation one step forward
 // Although DoSimStep must be included in SimMatrix type since it modifies private member variable simMatrix
 
-// Useless for now
-//void DoSimStep(SimMatrix& simMatrix);
 
 //TODO: Add const qualifiers for increasing security
 
-//TODO: Encapsulate sim_matrix in a class with methods to get better interface and firlds for statisticd
+//TODO: Encapsulate sim_matrix in a class with methods to get better interface and fields for statistics
 
 //TODO: Create entire class of SimCell to obtain statistics and encaplsulate fields for better interface handling
 

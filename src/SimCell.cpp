@@ -47,7 +47,7 @@ bool SimCell::IsAlive() const
 
 // Dangerous, because of not incrementing any of counters, call of this function is not captured by statistics
 // On the other hand, we must initialize values and this is the situation in which we do not want to update statistics
-// This could be done by constructor!!!!!!!
+// Changing state should be done by calling interface for raspawning and killing cells
 void SimCell::SetCellState(bool state)
 {
 	isAlive = state;
