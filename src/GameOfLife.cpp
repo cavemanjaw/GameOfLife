@@ -309,5 +309,7 @@ MatrixSetup SetSimulation()
 
 void PrintProgramHelp()
 {
-	std::cout << "To write help function!";
+	std::cout << "usage: GameOfLife [--help] [--steps=<number>] [--size=<number>]\n"
+			  << "                  [--print-pretty] [--store-results] [--print-status] [--explore-results]\n"
+			  << "                  [--rules=[<number>,<number>,<number>,<number>]]\n";
 }
