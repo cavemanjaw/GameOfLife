@@ -54,7 +54,7 @@ void ExploreSimulationResults(SimulationOutput simResults)
 
 SimulationOutput RunSimulation(MatrixSetup setup)
 {
-	SimMatrix simMatrix(setup.matrixSize, FillMode::RANDOM_FILL);
+	SimMatrix simMatrix(setup.matrixHeight, setup.matrixWidth, FillMode::RANDOM_FILL);
 	SimulationOutput simOutput;	
 	
 	std::cout << "Simulation starts..." << std::endl << std::endl;	
@@ -169,8 +169,10 @@ MatrixSetup SetSimulationFromParameters(const InputParameterParser& parserInstan
 	//For ParameterCharacter::INTEGER -1 will be returned if no value provided
 	setup.stepsAmount = parserInstance.GetParameterIntegerValue(parameters[STEPS]);
 	setup.stepsAmount = (setup.stepsAmount != -1) ? setup.stepsAmount : 10;
-	setup.matrixSize = parserInstance.GetParameterIntegerValue(parameters[SIZE]);
-	setup.matrixSize = (setup.matrixSize != -1) ? setup.matrixSize : 10;
+	setup.matrixHeight = parserInstance.GetParameterIntegerValue(parameters[HEIGHT]);
+	setup.matrixHeight = (setup.matrixHeight != -1) ? setup.matrixHeight : 10;
+	setup.matrixWidth = parserInstance.GetParameterIntegerValue(parameters[WIDTH]);
+	setup.matrixWidth = (setup.matrixWidth != -1) ? setup.matrixWidth : 10;
 
 	std::vector<int> simulationRules = parserInstance.GetParameterIntegerPackValue(parameters[RULES]);
 
@@ -229,10 +231,12 @@ MatrixSetup SetSimulation()
 	std::cout << "How many steps do you want to simulate?" << std::endl;
 	std::cout << "> ";	
 	std::cin >> setup.stepsAmount;
-	std::cout << "How big the simulation matrix should be?" << std::endl;
+	std::cout << "How big should the height of simulation matrix be?" << std::endl;
+	std::cout << "> ";
+	std::cin >> setup.matrixHeight;
+	std::cout << "How big should the width of simulation matrix be?" << std::endl;
 	std::cout << "> ";	
-	std::cin >> setup.matrixSize;
-	
+	std::cin >> setup.matrixWidth;
 	std::cout << "Do you want to store every state of simulation matrix? [Y/n]" << std::endl;
 	
 	//Only one variable is needed?
@@ -300,7 +304,7 @@ MatrixSetup SetSimulation()
 
 void PrintProgramHelp()
 {
-	std::cout << "usage: GameOfLife [--help] [--steps=<number>] [--size=<number>]\n"
+	std::cout << "usage: GameOfLife [--help] [--steps=<number>] [--height=<number>] [--width=<number>]\n"
 			  << "                  [--print-pretty] [--store-results] [--print-status] [--explore-results]\n"
 			  << "                  [--rules=[<number>,<number>,<number>,<number>]]\n";
 }

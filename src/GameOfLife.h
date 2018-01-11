@@ -34,7 +34,8 @@ struct MatrixSetup
 {
 	bool saveMatrixSteps;
 	int stepsAmount;
-	int matrixSize;
+	int matrixHeight;
+	int matrixWidth;
 
 	//For pretty printing, consider if is needed, if threads will execute simulation concurrently and then print the result?
 	bool isPretty;
