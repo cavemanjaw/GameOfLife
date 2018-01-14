@@ -25,7 +25,7 @@ void ExploreSimulationResults(SimulationOutput simResults)
 		int numberOfSimStep;
 		std::cin >> numberOfSimStep;
 		
-		if (numberOfSimStep < simResults.matrixSteps.size() && numberOfSimStep >= 0)
+		if (numberOfSimStep < static_cast<int>(simResults.matrixSteps.size()) && numberOfSimStep >= 0)
 		{
 			std::cout << "Do you want the matrix to be pretty printed? [Y/n]" << std::endl;
 			char printPretty;

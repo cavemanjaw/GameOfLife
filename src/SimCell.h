@@ -19,8 +19,8 @@ private:
 	bool isAlive;
 
 	// For really long simulations ;)
-	long long respawnCounter;
 	long long killCounter;
+	long long respawnCounter;
 };
 
 #endif

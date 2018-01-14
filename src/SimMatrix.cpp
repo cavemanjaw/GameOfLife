@@ -210,9 +210,9 @@ void SimMatrix::DoSimStep(SimulationRulesSetup rules)
 {
 	SimMatrix locSimMatrix = *this;
 
-	for (int i = 0; i < locSimMatrix.simMatrix.size(); ++i)
+	for (unsigned i = 0; i < locSimMatrix.simMatrix.size(); ++i)
 	{		
-		for (int j = 0; j < locSimMatrix.simMatrix.at(i).size(); ++j)
+		for (unsigned j = 0; j < locSimMatrix.simMatrix.at(i).size(); ++j)
 		{
 			locSimMatrix.SetCellStatus(i, j, AdjacentCellsAlive(i, j), rules);
 		}
@@ -225,9 +225,9 @@ SimMatrix SimMatrix::DoSimStepReturnMatrix(SimulationRulesSetup rules)
 {
 	SimMatrix locSimMatrix = *this;
 
-	for (int i = 0; i < locSimMatrix.simMatrix.size(); ++i)
+	for (unsigned i = 0; i < locSimMatrix.simMatrix.size(); ++i)
 	{		
-		for (int j = 0; j < locSimMatrix.simMatrix.at(i).size(); ++j)
+		for (unsigned j = 0; j < locSimMatrix.simMatrix.at(i).size(); ++j)
 		{
 			locSimMatrix.SetCellStatus(i, j, AdjacentCellsAlive(i, j), rules);
 		}
