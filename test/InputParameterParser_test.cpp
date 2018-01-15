@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "../src/InputParameterParser.h"
+
 class InputParameterParserTest : public testing::Test
 {
 	virtual void SetUp() {}
@@ -196,9 +197,9 @@ TEST_F(InputParameterParserTest, RulesWithOnlyComma)
 	ASSERT_EQ(noOfExpectedPackElements, returnedParameterPack.size());
 }
 
-int main(int argc, char** argv)
-{
-	::testing::InitGoogleTest(&argc, argv);
-	return RUN_ALL_TESTS();
-}
+//int main(int argc, char** argv)
+//{
+//	::testing::InitGoogleTest(&argc, argv);
+//	return RUN_ALL_TESTS();
+//}
 

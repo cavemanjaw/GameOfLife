@@ -46,10 +46,10 @@ TARGET_OBJECTS := $(patsubst %.cpp, %.o, $(TARGET_SOURCES))
 TEST_SOURCES := $(shell find test/ -name "*.cpp")
 
 #Filter out main_test.cpp and SimCell_test.cpp for now, tests are written only for arguments parser for now
-TEST_SOURCES := $(filter-out test/main_test.cpp test/SimCell_test.cpp, $(TEST_SOURCES))
+#TEST_SOURCES := $(filter-out test/main_test.cpp test/SimCell_test.cpp, $(TEST_SOURCES))
 
 #Add those files under test from ./src
-TEST_SOURCES += src/InputParameterParser.cpp
+TEST_SOURCES += src/InputParameterParser.cpp src/SimCell.cpp
 
 TEST_OBJECTS := $(patsubst %.cpp, %.o, $(TEST_SOURCES))
 

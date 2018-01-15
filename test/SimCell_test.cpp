@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "../src/SimCell.h"
+
 class SimCellTest : public testing::Test
 {	
 	virtual void SetUp() {}
