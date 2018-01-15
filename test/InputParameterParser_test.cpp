@@ -120,6 +120,82 @@ TEST_F(InputParameterParserTest, OnlyRulesParameterPassedTwoValues)
 	}
 }
 
+
+TEST_F(InputParameterParserTest, RulesWithoutAnythingAfterEqualSign)
+{
+	int argcMock = 2;
+
+	const char* arg0 = "name_of_program";
+
+	//Values given with additional space after '=' character
+	const char* arg1 = "--rules=";
+
+	const char* argvMock[argcMock] = {arg0, arg1};
+
+	const int noOfExpectedPackElements = 0;
+
+	InputParameterParser parserInstance(argcMock, argvMock);
+
+	//Get return value of GetParameterIntegerValue() for two passed parameters
+	auto returnedParameterPack = parserInstance.GetParameterIntegerPackValue(parameters[RULES]);
+
+	//Check the size of returned parameter pack
+	ASSERT_EQ(noOfExpectedPackElements, returnedParameterPack.size());
+}
+
+
+TEST_F(InputParameterParserTest, RulesWithOnlyOneNumber)
+{
+	int argcMock = 2;
+
+	const char* arg0 = "name_of_program";
+
+	//Values given with additional space after '=' character
+	const char* arg1 = "--rules=6";
+
+	const char* argvMock[argcMock] = {arg0, arg1};
+
+	const int noOfExpectedPackElements = 1;
+	const int expectedPackElements[noOfExpectedPackElements] = {6};
+
+	InputParameterParser parserInstance(argcMock, argvMock);
+
+	//Get return value of GetParameterIntegerValue() for two passed parameters
+	auto returnedParameterPack = parserInstance.GetParameterIntegerPackValue(parameters[RULES]);
+
+	//Check the size of returned parameter pack
+	ASSERT_EQ(noOfExpectedPackElements, returnedParameterPack.size());
+
+	//Check values of all parameters in parameter pack
+	for (int i = 0; i < noOfExpectedPackElements; ++i)
+	{
+		ASSERT_EQ(expectedPackElements[i], returnedParameterPack[i]);
+	}
+}
+
+
+TEST_F(InputParameterParserTest, RulesWithOnlyCommar)
+{
+	int argcMock = 2;
+
+	const char* arg0 = "name_of_program";
+
+	//Values given with additional space after '=' character
+	const char* arg1 = "--rules=,";
+
+	const char* argvMock[argcMock] = {arg0, arg1};
+
+	const int noOfExpectedPackElements = 0;
+
+	InputParameterParser parserInstance(argcMock, argvMock);
+
+	//Get return value of GetParameterIntegerValue() for two passed parameters
+	auto returnedParameterPack = parserInstance.GetParameterIntegerPackValue(parameters[RULES]);
+
+	//Check the size of returned parameter pack
+	ASSERT_EQ(noOfExpectedPackElements, returnedParameterPack.size());
+}
+
 int main(int argc, char** argv)
 {
 	::testing::InitGoogleTest(&argc, argv);
