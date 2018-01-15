@@ -174,7 +174,7 @@ TEST_F(InputParameterParserTest, RulesWithOnlyOneNumber)
 }
 
 
-TEST_F(InputParameterParserTest, RulesWithOnlyCommar)
+TEST_F(InputParameterParserTest, RulesWithOnlyComma)
 {
 	int argcMock = 2;
 

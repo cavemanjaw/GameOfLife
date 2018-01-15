@@ -76,13 +76,16 @@ std::vector<int> InputParameterParser::GetParameterIntegerPackValue(const InputP
 		{	
 			std::string isolatedParameterPack = token.substr(parameter.parameter.size(), std::string::npos);
 			//Find first of numeric char, then find first of space, push back the value to vector, repeat until npos
-			unsigned startPosition = 0;
-			unsigned endPosition = 0;
+			std::size_t startPosition = 0;
+			std::size_t endPosition = 0;
 			while (endPosition != std::string::npos)
 			{
 				startPosition = isolatedParameterPack.find_first_of("0123456789", startPosition);
 				endPosition = isolatedParameterPack.find_first_of(",", startPosition);
-				parameterPack.push_back(std::stoi(isolatedParameterPack.substr(startPosition, endPosition)));
+				if(startPosition != std::string::npos)
+				{
+					parameterPack.push_back(std::stoi(isolatedParameterPack.substr(startPosition, endPosition)));
+				}
 				startPosition = endPosition;
 			}
 		}
