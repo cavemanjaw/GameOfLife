@@ -13,6 +13,7 @@ SimMatrix::SimMatrix(int matrixSize, FillMode fillMode)
 //Consider if checking inside two loops (if that is on top of assignment is faster than if before two loops
 
 //First of all, resize the matrix
+//TODO: Maybe constructor of std::vector could do this
 ResizeSimMatrix(matrixSize);
 
 switch(fillMode)

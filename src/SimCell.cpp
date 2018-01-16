@@ -1,7 +1,8 @@
 #include "SimCell.h"
 
 SimCell::SimCell()
-	:killCounter(0),
+	:isAlive(false),
+	 killCounter(0),
 	 respawnCounter(0)
 {}
 

@@ -17,10 +17,8 @@ public:
 protected:
 private:
 	bool isAlive;
-
-	// For really long simulations ;)
-	long long killCounter;
-	long long respawnCounter;
+	int killCounter;
+	int respawnCounter;
 };
 
 #endif
