@@ -33,19 +33,13 @@ case ALIVE_FILL:
 	{		
 		for (auto j = i->begin(); j != i->end(); ++j)
 		{
-			j->SetAlive(); 
+			j->SetCellState(true);
 		}
 	}
 break;
 
 case DEAD_FILL:
-	for (auto i = simMatrix.begin(); i != simMatrix.end(); ++i)
-	{		
-		for (auto j = i->begin(); j != i->end(); ++j)
-		{
-			j->SetDead(); 
-		}
-	}
+	//No need to do anything, default constructor of SimCell initializes cell state to false
 break;
 }
 }
@@ -103,17 +97,6 @@ void SimMatrix::PrintSimMatrixPretty() const
 	}
 }
 
-// Change this function to have an enum for populating with certain output
-void SimMatrix::RandPopulateSimMatrix()
-{
-	for (auto i = simMatrix.begin(); i != simMatrix.end(); ++i)
-	{		
-		for (auto j = i->begin(); j != i->end(); ++j)
-		{
-			j->SetCellState(rand()%2); 
-		}
-	}
-}
 
 void SimMatrix::ResizeSimMatrix(int height, int width)
 {
@@ -139,7 +122,7 @@ int SimMatrix::AdjacentCellsAlive(int x, int y) const
 		for (int j = y - 1; j <= y + 1; ++j)
 		{
 			// Check if cell is not out of bound and is not the cell we are checking itself
-			if ((i >= 0 && i < N) && (j >= 0 && j < N) && !(x == i && y == i))
+			if ((i >= 0 && i < N) && (j >= 0 && j < N) && !(x == i && y == j))
 			{
 				if (simMatrix[i][j].IsAlive() == true)
 				{

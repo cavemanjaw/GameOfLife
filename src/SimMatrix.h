@@ -31,20 +31,15 @@ public:
 
 	void PrintSimMatrix() const;
 
-	void RandPopulateSimMatrix();
-
-	// Only squared matrixes supported right now
-
-	//Returns the amount of alive adjacent cells for given x and y coordinates
-	int AdjacentCellsAlive(int x, int y) const;
-
-	void SetCellStatus(int x, int y, int aliveAdjacent, SimulationRulesSetup rules);
-
 	void PrintSimMatrixPretty() const;
 
 	void DoSimStep(SimulationRulesSetup rules);
 
 	SimMatrix DoSimStepReturnMatrix(SimulationRulesSetup rules);
+
+	//TODO: Move to private section if testing part is ready
+	//Returns the amount of alive adjacent cells for given x and y coordinates
+	int AdjacentCellsAlive(int x, int y) const;
 
 protected:
 private:
@@ -52,13 +47,12 @@ private:
 
 	void ResizeSimMatrix(int height, int width);
 
+	void SetCellStatus(int x, int y, int aliveAdjacent, SimulationRulesSetup rules);
+
 };
-//TODO: Add const qualifiers for increasing security
 
 //TODO: Encapsulate sim_matrix in a class with methods to get better interface and fields for statistics
 
 //TODO: Create entire class of SimCell to obtain statistics and encaplsulate fields for better interface handling
-
-//TODO: Make possible not squared matrixes to simulate
 
 #endif
