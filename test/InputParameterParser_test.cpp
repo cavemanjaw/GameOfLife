@@ -15,25 +15,38 @@ class InputParameterParserTest : public testing::Test
 
 //TODO:Change indexing of parameters array variable to enums
 
-TEST_F(InputParameterParserTest, OnlySizeParameterPassed)
+TEST_F(InputParameterParserTest, OnlyHeightParameterPassed)
 {
 	int argcMock = 2;
 	const char* arg0 = "name_of_program";
-	const char* arg1 = "--size=10";
+	const char* arg1 = "--height=10";
 	const char* argvMock[argcMock] = {arg0, arg1};
 
 	InputParameterParser parserInstance(argcMock, argvMock);
 
 	//Check return value of GetParameterIntegerValue()
-	ASSERT_EQ(10, parserInstance.GetParameterIntegerValue(parameters[SIZE]));
+	ASSERT_EQ(10, parserInstance.GetParameterIntegerValue(parameters[HEIGHT]));
 }
 
-TEST_F(InputParameterParserTest, SizeParameterAndFaultyParameterPassed)
+TEST_F(InputParameterParserTest, OnlyWidthParameterPassed)
+{
+	int argcMock = 2;
+	const char* arg0 = "name_of_program";
+	const char* arg1 = "--width=20";
+	const char* argvMock[argcMock] = {arg0, arg1};
+
+	InputParameterParser parserInstance(argcMock, argvMock);
+
+	//Check return value of GetParameterIntegerValue()
+	ASSERT_EQ(20, parserInstance.GetParameterIntegerValue(parameters[WIDTH]));
+}
+
+TEST_F(InputParameterParserTest, HeightParameterAndFaultyParameterPassed)
 {
 	int argcMock = 3;
 
 	const char* arg0 = "name_of_program";
-	const char* arg1 = "--size=10";
+	const char* arg1 = "--height=10";
 	//Typo in "steps" parameter
 	const char* arg2 = "--stes=100";
 
@@ -42,7 +55,7 @@ TEST_F(InputParameterParserTest, SizeParameterAndFaultyParameterPassed)
 	InputParameterParser parserInstance(argcMock, argvMock);
 
 	//Check return value of GetParameterIntegerValue() for two passed parameters
-	ASSERT_EQ(10, parserInstance.GetParameterIntegerValue(parameters[SIZE]));
+	ASSERT_EQ(10, parserInstance.GetParameterIntegerValue(parameters[HEIGHT]));
 	ASSERT_EQ(-1, parserInstance.GetParameterIntegerValue(parameters[STEPS]));
 }
 

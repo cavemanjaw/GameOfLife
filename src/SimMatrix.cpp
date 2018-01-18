@@ -7,14 +7,13 @@
 //TODO: Consider which function can be "const" qualified
 //TODO: For the abstraction type represented by class SimCell there is a need for big interface change in almost all of this functions
 
-SimMatrix::SimMatrix(int matrixSize, FillMode fillMode)
+SimMatrix::SimMatrix(int matrixHeight, int matrixWidth, FillMode fillMode)
 {
 //Workaroung right now, case for random filling uses member function
 //Consider if checking inside two loops (if that is on top of assignment is faster than if before two loops
 
 //First of all, resize the matrix
-//TODO: Maybe constructor of std::vector could do this
-ResizeSimMatrix(matrixSize);
+ResizeSimMatrix(matrixHeight, matrixWidth);
 
 switch(fillMode)
 {
@@ -116,12 +115,12 @@ void SimMatrix::RandPopulateSimMatrix()
 	}
 }
 
-void SimMatrix::ResizeSimMatrix(int size)
+void SimMatrix::ResizeSimMatrix(int height, int width)
 {
-	simMatrix.resize(size);
+	simMatrix.resize(height);
 	for (auto i = simMatrix.begin(); i != simMatrix.end(); ++i)
 	{
-		i->resize(size);
+		i->resize(width);
 	}
 }
 

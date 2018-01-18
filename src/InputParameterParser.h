@@ -6,7 +6,7 @@
 #include <array>
 #include <assert.h>
 
-#define NUMBER_OF_PARAMETERS 8
+#define NUMBER_OF_PARAMETERS 9
 
 //There is not use of this enum right now
 enum ParameterCharacter
@@ -26,14 +26,15 @@ struct InputParameter
 enum ParameterType
 {
 	STEPS = 0,
-	SIZE = 1,
-	PRINT_PRETTY = 2,
-	STORE_RESULTS = 3,
-	PRINT_STATUS = 4,
-	RULES = 5,
-	EXPLORE_RESULTS = 6,
-	HELP = 7,
-	NO_OF_PARAMETER_TYPES = 8
+	HEIGHT = 1,
+	WIDTH = 2,
+	PRINT_PRETTY = 3,
+	STORE_RESULTS = 4,
+	PRINT_STATUS = 5,
+	RULES = 6,
+	EXPLORE_RESULTS = 7,
+	HELP = 8,
+	NO_OF_PARAMETER_TYPES = 9
 };
 
 //Parse first parameter and apply
@@ -42,7 +43,8 @@ enum ParameterType
 const std::array<InputParameter, NUMBER_OF_PARAMETERS> parameters =
 	{{
 			{"--steps=", INTEGER},
-			{"--size=", INTEGER},
+			{"--height=", INTEGER},
+			{"--width=", INTEGER},
 			{"--print-pretty", BOOL},
 			{"--store-results", BOOL},
 			{"--print-status", BOOL},

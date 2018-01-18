@@ -25,7 +25,7 @@ enum FillMode
 class SimMatrix
 {
 public:
-	SimMatrix(int matrixSize, FillMode fillMode);
+	SimMatrix(int matrixHeight, int matrixWidth, FillMode fillMode);
 
 	std::pair<int, int> GetMaxRespawnCell();
 
@@ -50,7 +50,7 @@ protected:
 private:
 	std::vector<std::vector<SimCell>> simMatrix;
 
-	void ResizeSimMatrix(int size);
+	void ResizeSimMatrix(int height, int width);
 
 };
 //TODO: Add const qualifiers for increasing security
