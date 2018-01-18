@@ -113,7 +113,8 @@ void SimMatrix::ResizeSimMatrix(int height, int width)
 int SimMatrix::AdjacentCellsAlive(int x, int y) const
 {
 	// For now only squared matrix are supported
-	int N = simMatrix.size();
+	int height = simMatrix.size();
+	int width =simMatrix.at(0).size();
 
 	// Variable for counting alive adjacent cells
 	int aliveAdjacent = 0;
@@ -122,7 +123,7 @@ int SimMatrix::AdjacentCellsAlive(int x, int y) const
 		for (int j = y - 1; j <= y + 1; ++j)
 		{
 			// Check if cell is not out of bound and is not the cell we are checking itself
-			if ((i >= 0 && i < N) && (j >= 0 && j < N) && !(x == i && y == j))
+			if ((i >= 0 && i < height) && (j >= 0 && j < width) && !(x == i && y == j))
 			{
 				if (simMatrix[i][j].IsAlive() == true)
 				{

@@ -49,7 +49,7 @@ TEST_SOURCES := $(shell find test/ -name "*.cpp")
 #TEST_SOURCES := $(filter-out test/main_test.cpp test/SimCell_test.cpp, $(TEST_SOURCES))
 
 #Add those files under test from ./src
-TEST_SOURCES += src/InputParameterParser.cpp src/SimCell.cpp
+TEST_SOURCES += src/InputParameterParser.cpp src/SimCell.cpp src/SimMatrix.cpp
 
 TEST_OBJECTS := $(patsubst %.cpp, %.o, $(TEST_SOURCES))
 
