@@ -11,16 +11,16 @@ class SimCellTest : public testing::Test
 TEST_F(SimCellTest, KillAndRespawnCounterInitialStatus)
 {
 	SimCell simCell;
-	ASSERT_EQ(0, simCell.GetRespawnCounter());
-	ASSERT_EQ(0, simCell.GetKillCounter());
+	EXPECT_EQ(0, simCell.GetRespawnCounter());
+	EXPECT_EQ(0, simCell.GetKillCounter());
 }
 
 TEST_F(SimCellTest, SetAliveTest)
 {
 	SimCell simCell;
 	simCell.SetAlive();
-	ASSERT_EQ(true, simCell.IsAlive());
-	ASSERT_EQ(1, simCell.GetRespawnCounter());
+	EXPECT_EQ(true, simCell.IsAlive());
+	EXPECT_EQ(1, simCell.GetRespawnCounter());
 }
 
 TEST_F(SimCellTest, SettingAliveManyTimes)
@@ -30,16 +30,16 @@ TEST_F(SimCellTest, SettingAliveManyTimes)
 	{ 
 		simCell.SetAlive();
 	}
-	ASSERT_EQ(true, simCell.IsAlive());
-	ASSERT_EQ(1, simCell.GetRespawnCounter());
+	EXPECT_EQ(true, simCell.IsAlive());
+	EXPECT_EQ(1, simCell.GetRespawnCounter());
 }
 
 TEST_F(SimCellTest, SetDeadTest)
 {
 	SimCell simCell;
 	simCell.SetDead();
-	ASSERT_EQ(false, simCell.IsAlive());
-	ASSERT_EQ(0, simCell.GetKillCounter());
+	EXPECT_EQ(false, simCell.IsAlive());
+	EXPECT_EQ(0, simCell.GetKillCounter());
 }
 
 TEST_F(SimCellTest, SetDeadManyTimes)
@@ -49,8 +49,8 @@ TEST_F(SimCellTest, SetDeadManyTimes)
 	{
 		simCell.SetDead();
 	}
-	ASSERT_EQ(false, simCell.IsAlive());
-	ASSERT_EQ(0, simCell.GetKillCounter());
+	EXPECT_EQ(false, simCell.IsAlive());
+	EXPECT_EQ(0, simCell.GetKillCounter());
 }
 
 TEST_F(SimCellTest, SetDeadAndAliveAlternately)
@@ -64,7 +64,7 @@ TEST_F(SimCellTest, SetDeadAndAliveAlternately)
 	simCell.SetDead();
 	simCell.SetAlive();
 
-	ASSERT_EQ(true, simCell.IsAlive());
-	ASSERT_EQ(2, simCell.GetKillCounter());
-	ASSERT_EQ(3, simCell.GetRespawnCounter());
+	EXPECT_EQ(true, simCell.IsAlive());
+	EXPECT_EQ(2, simCell.GetKillCounter());
+	EXPECT_EQ(3, simCell.GetRespawnCounter());
 }

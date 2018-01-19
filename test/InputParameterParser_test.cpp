@@ -25,7 +25,7 @@ TEST_F(InputParameterParserTest, OnlyHeightParameterPassed)
 	InputParameterParser parserInstance(argcMock, argvMock);
 
 	//Check return value of GetParameterIntegerValue()
-	ASSERT_EQ(10, parserInstance.GetParameterIntegerValue(parameters[HEIGHT]));
+	EXPECT_EQ(10, parserInstance.GetParameterIntegerValue(parameters[HEIGHT]));
 }
 
 TEST_F(InputParameterParserTest, OnlyWidthParameterPassed)
@@ -38,7 +38,7 @@ TEST_F(InputParameterParserTest, OnlyWidthParameterPassed)
 	InputParameterParser parserInstance(argcMock, argvMock);
 
 	//Check return value of GetParameterIntegerValue()
-	ASSERT_EQ(20, parserInstance.GetParameterIntegerValue(parameters[WIDTH]));
+	EXPECT_EQ(20, parserInstance.GetParameterIntegerValue(parameters[WIDTH]));
 }
 
 TEST_F(InputParameterParserTest, HeightParameterAndFaultyParameterPassed)
@@ -55,8 +55,8 @@ TEST_F(InputParameterParserTest, HeightParameterAndFaultyParameterPassed)
 	InputParameterParser parserInstance(argcMock, argvMock);
 
 	//Check return value of GetParameterIntegerValue() for two passed parameters
-	ASSERT_EQ(10, parserInstance.GetParameterIntegerValue(parameters[HEIGHT]));
-	ASSERT_EQ(-1, parserInstance.GetParameterIntegerValue(parameters[STEPS]));
+	EXPECT_EQ(10, parserInstance.GetParameterIntegerValue(parameters[HEIGHT]));
+	EXPECT_EQ(-1, parserInstance.GetParameterIntegerValue(parameters[STEPS]));
 }
 
 TEST_F(InputParameterParserTest, FaultyParameterPassed)
@@ -73,7 +73,7 @@ TEST_F(InputParameterParserTest, FaultyParameterPassed)
 	InputParameterParser parserInstance(argcMock, argvMock);
 
 	//Check return value of GetParameterIntegerValue() for two passed parameters
-	ASSERT_EQ(false, parserInstance.IsParameterProvided(parameters[PRINT_PRETTY]));
+	EXPECT_EQ(false, parserInstance.IsParameterProvided(parameters[PRINT_PRETTY]));
 }
 
 TEST_F(InputParameterParserTest, OnlyRulesParameterPassedFourValues)
@@ -101,7 +101,7 @@ TEST_F(InputParameterParserTest, OnlyRulesParameterPassedFourValues)
 	//Check values of all parameters in parameter pack
 	for (int i = 0; i < noOfExpectedPackElements; ++i)
 	{
-		ASSERT_EQ(expectedPackElements[i], returnedParameterPack[i]);
+		EXPECT_EQ(expectedPackElements[i], returnedParameterPack[i]);
 	}
 }
 
@@ -130,7 +130,7 @@ TEST_F(InputParameterParserTest, OnlyRulesParameterPassedTwoValues)
 	//Check values of all parameters in parameter pack
 	for (int i = 0; i < noOfExpectedPackElements; ++i)
 	{
-		ASSERT_EQ(expectedPackElements[i], returnedParameterPack[i]);
+		EXPECT_EQ(expectedPackElements[i], returnedParameterPack[i]);
 	}
 }
 
@@ -154,7 +154,7 @@ TEST_F(InputParameterParserTest, RulesWithoutAnythingAfterEqualSign)
 	auto returnedParameterPack = parserInstance.GetParameterIntegerPackValue(parameters[RULES]);
 
 	//Check the size of returned parameter pack
-	ASSERT_EQ(noOfExpectedPackElements, returnedParameterPack.size());
+	EXPECT_EQ(noOfExpectedPackElements, returnedParameterPack.size());
 }
 
 
@@ -183,7 +183,7 @@ TEST_F(InputParameterParserTest, RulesWithOnlyOneNumber)
 	//Check values of all parameters in parameter pack
 	for (int i = 0; i < noOfExpectedPackElements; ++i)
 	{
-		ASSERT_EQ(expectedPackElements[i], returnedParameterPack[i]);
+		EXPECT_EQ(expectedPackElements[i], returnedParameterPack[i]);
 	}
 }
 
@@ -207,7 +207,7 @@ TEST_F(InputParameterParserTest, RulesWithOnlyComma)
 	auto returnedParameterPack = parserInstance.GetParameterIntegerPackValue(parameters[RULES]);
 
 	//Check the size of returned parameter pack
-	ASSERT_EQ(noOfExpectedPackElements, returnedParameterPack.size());
+	EXPECT_EQ(noOfExpectedPackElements, returnedParameterPack.size());
 }
 
 //int main(int argc, char** argv)
