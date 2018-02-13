@@ -43,6 +43,9 @@ struct MatrixSetup
 	//For choosing the option of showing simulation status for every step
 	bool showSteps;
 
+	//The number of hardware threads that simulation will be run on
+	unsigned numberOfThreads;
+
 	//Struct for custom simulation rules
 	SimulationRulesSetup rules;
 };

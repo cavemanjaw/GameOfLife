@@ -6,7 +6,7 @@
 #include <array>
 #include <assert.h>
 
-#define NUMBER_OF_PARAMETERS 9
+#define NUMBER_OF_PARAMETERS 10
 
 //There is not use of this enum right now
 enum ParameterCharacter
@@ -34,7 +34,8 @@ enum ParameterType
 	RULES = 6,
 	EXPLORE_RESULTS = 7,
 	HELP = 8,
-	NO_OF_PARAMETER_TYPES = 9
+	THREADS = 9,
+	NO_OF_PARAMETER_TYPES = 10
 };
 
 //Parse first parameter and apply
@@ -50,7 +51,8 @@ const std::array<InputParameter, NUMBER_OF_PARAMETERS> parameters =
 			{"--print-status", BOOL},
 			{"--rules=", INTEGER_PACK},
 			{"--explore-results", BOOL},
-			{"--help", BOOL}
+			{"--help", BOOL},
+			{"--threads", INTEGER}
 	}};
 
 static_assert(NUMBER_OF_PARAMETERS == NO_OF_PARAMETER_TYPES,

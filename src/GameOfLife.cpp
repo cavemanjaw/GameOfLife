@@ -1,5 +1,6 @@
 #include "GameOfLife.h"
 #include <iostream>
+#include <thread>
 #include "SimMatrix.h"
 #include <iomanip>
 #include "InputParameterParser.h"
@@ -165,6 +166,25 @@ MatrixSetup SetSimulationFromParameters(const InputParameterParser& parserInstan
 	setup.saveMatrixSteps = parserInstance.IsParameterProvided(parameters[STORE_RESULTS]);
 	setup.isPretty = parserInstance.IsParameterProvided(parameters[PRINT_PRETTY]);
 	setup.showSteps = parserInstance.IsParameterProvided(parameters[PRINT_STATUS]);
+
+	//Set number of parameters value
+	//TODO: Needs refactor, types are inconsistent, branches can be reduced
+	int numberOfThreadsFromParameter = parserInstance.GetParameterIntegerValue(parameters[THREADS]);
+
+	if (numberOfThreadsFromParameter > std::thread::hardware_concurrency())
+	{
+		setup.numberOfThreads = std::thread::hardware_concurrency();
+	}
+	else if (numberOfThreadsFromParameter == -1)
+	{
+		//Parameter was not provided, run the simulation on one core
+		setup.numberOfThreads = 1;
+	}
+	else
+	{
+		//Set the value according to parameter that was provided
+		setup.numberOfThreads = numberOfThreadsFromParameter;
+	}
 
 	//For ParameterCharacter::INTEGER -1 will be returned if no value provided
 	setup.stepsAmount = parserInstance.GetParameterIntegerValue(parameters[STEPS]);
