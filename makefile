@@ -55,16 +55,17 @@ TEST_OBJECTS := $(patsubst %.cpp, %.o, $(TEST_SOURCES))
 
 all: target test
 #May be a problem, the order of arguments matters for linkage of the test part of project
-GTEST_FLAGS := -I $$GTEST_HOME/include -L $$GTEST_HOME/lib -lgtest -lgtest_main -lpthread 
+GTEST_FLAGS := -I $$GTEST_HOME/include -L $$GTEST_HOME/lib -lgtest -lgtest_main -lpthread
+THREAD_FLAGS := -pthread 
 
 target: $(EXECUTABLE)
 test: $(TEST_EXECUTABLE)
 
 $(EXECUTABLE): $(TARGET_OBJECTS)
-	    $(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(EXECUTABLE) $(TARGET_OBJECTS) $(LDLIBS)
+	    $(CXX) $(CXXFLAGS) $(LDFLAGS) $(THREAD_FLAGS) -o $(EXECUTABLE) $(TARGET_OBJECTS) $(LDLIBS)
 
 $(TEST_EXECUTABLE): $(TEST_OBJECTS)
-	    $(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(TEST_EXECUTABLE) $(TEST_OBJECTS) $(LDLIBS) $(GTEST_FLAGS)
+	    $(CXX) $(CXXFLAGS) $(LDFLAGS) $(THREAD_FLAGS) -o $(TEST_EXECUTABLE) $(TEST_OBJECTS) $(LDLIBS) $(GTEST_FLAGS)
 
 depend: .depend
 

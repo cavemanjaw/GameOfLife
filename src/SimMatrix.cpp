@@ -3,6 +3,9 @@
 #include "SimMatrix.h"
 #include "GameOfLife.h"
 #include <time.h>
+#include <thread>
+
+using ThreadVec = std::vector<std::thread>;
 
 //TODO: Consider which function can be "const" qualified
 //TODO: For the abstraction type represented by class SimCell there is a need for big interface change in almost all of this functions
@@ -190,22 +193,72 @@ void SimMatrix::SetCellStatus(int x, int y, int aliveAdjacent, SimulationRulesSe
 
 //Two of the functions can be modificated in such way to operate only on simMatrix field of SimMatrix class
 
-void SimMatrix::DoSimStep(SimulationRulesSetup rules)
+void SimMatrix::DoSimStep(const MatrixSetup& setup)
 {
-	SimMatrix locSimMatrix = *this;
+	//TODO: Go through this flow :)
 
-	for (std::size_t i = 0; i < locSimMatrix.simMatrix.size(); ++i)
-	{		
-		for (std::size_t j = 0; j < locSimMatrix.simMatrix.at(i).size(); ++j)
+	//Create vector of threads and reserve the necessary space
+	ThreadVec threads;
+	threads.reserve(setup.numberOfThreads);
+	std::vector<SimMatrix> localSimMatrix(setup.numberOfThreads, *this);
+
+	//Calculate the division of work to be done by threads
+	std::size_t numberOfRowsPerJob = this->simMatrix.size() / setup.numberOfThreads;
+	//Remaining jobs due to mod != 0
+	std::size_t remainingJobs = this->simMatrix.size() -
+	  setup.numberOfThreads * numberOfRowsPerJob;
+
+	//Dispatch jobs, can it be optimized (without last if statement?)
+	//Can be, just add rameining jobs to numberOfRows and then assign zero to the variable
+	//Job distapched variable?
+	for (std::size_t i = 0, j = 0; i < threads.capacity(); ++i, j +=numberOfRowsPerJob)
+	{
+		threads.push_back(
+		  std::thread(&SimMatrix::DoSimStepThreadJob, this, std::ref(j), j + numberOfRowsPerJob, std::ref(localSimMatrix.at(i)), std::ref(setup)));
+
+		if (i == threads.capacity() - 1)
 		{
-			locSimMatrix.SetCellStatus(i, j, AdjacentCellsAlive(i, j), rules);
+			threads.push_back(
+			  std::thread(&SimMatrix::DoSimStepThreadJob, this, std::ref(j), j + numberOfRowsPerJob + remainingJobs, std::ref(localSimMatrix.at(i)), std::ref(setup)));
 		}
 	}
-	*this = locSimMatrix;
+
+	//Wait for the execution of all of the threads
+	for (std::size_t i = 0; i < threads.capacity(); ++i)
+	{
+		threads.at(i).join();
+	}
+
+	//Merge the inputs from threads
+	for (std::size_t i = 0, j = 0; i < threads.capacity(); ++i, j +=numberOfRowsPerJob)
+	{
+		for (std::size_t k = j; k < numberOfRowsPerJob; ++k)
+		{
+			this->simMatrix.at(k) = localSimMatrix.at(i).simMatrix.at(k);
+		}
+		if (i == threads.capacity() - 1)
+		{
+			for (std::size_t k = j; k < numberOfRowsPerJob + remainingJobs; ++k)
+			{
+				this->simMatrix.at(k) = localSimMatrix.at(i).simMatrix.at(k);
+			}
+		}
+	}
+}
+
+void SimMatrix::DoSimStepThreadJob(std::size_t startRow, std::size_t endRow, SimMatrix& locSimMatrix, const MatrixSetup& setup)
+{
+	for (std::size_t i = startRow; i < endRow; ++i)
+	{
+		for (std::size_t j = 0; j < locSimMatrix.simMatrix.at(i).size(); ++j)
+		{
+			locSimMatrix.SetCellStatus(i, j, AdjacentCellsAlive(i, j), setup.rules);
+		}
+	}
 }
 
 
-SimMatrix SimMatrix::DoSimStepReturnMatrix(SimulationRulesSetup rules)
+SimMatrix SimMatrix::DoSimStepReturnMatrix(const MatrixSetup& setup)
 {
 	SimMatrix locSimMatrix = *this;
 
@@ -213,7 +266,7 @@ SimMatrix SimMatrix::DoSimStepReturnMatrix(SimulationRulesSetup rules)
 	{		
 		for (std::size_t j = 0; j < locSimMatrix.simMatrix.at(i).size(); ++j)
 		{
-			locSimMatrix.SetCellStatus(i, j, AdjacentCellsAlive(i, j), rules);
+			locSimMatrix.SetCellStatus(i, j, AdjacentCellsAlive(i, j), setup.rules);
 		}
 	}
 	*this = locSimMatrix;

@@ -12,7 +12,9 @@
 //TODO: Consider, that if you make some of the functions private it would be necessary to modify DoSimStep() function as it creates a locals var and assignes it to *this
 //TODO: Function for getting statistics of fields
 
+//TODO: Remove those forward declarations, use proper inclusion of *.h files
 struct SimulationRulesSetup;
+struct MatrixSetup;
 
 //Move to GameOfLife.h?
 enum FillMode
@@ -33,9 +35,11 @@ public:
 
 	void PrintSimMatrixPretty() const;
 
-	void DoSimStep(SimulationRulesSetup rules);
+	void DoSimStep(const MatrixSetup& setup);
 
-	SimMatrix DoSimStepReturnMatrix(SimulationRulesSetup rules);
+	void DoSimStepThreadJob(std::size_t startRow, std::size_t endRow, SimMatrix& locSimMatrix, const MatrixSetup& setup);
+
+	SimMatrix DoSimStepReturnMatrix(const MatrixSetup& setup);
 
 	//TODO: Move to private section if testing part is ready
 	//Returns the amount of alive adjacent cells for given x and y coordinates
