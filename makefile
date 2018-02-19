@@ -33,12 +33,14 @@
 
 EXECUTABLE := GameOfLife
 TEST_EXECUTABLE := Test
+DEBUG_EXECUTABLE := GameOfLife_debug
+DEBUG_TEST_EXECUTABLE := Test_debug
 
-.PHONY: all target test
+.PHONY: all target test debug
 
 CXX := g++
-CXXFLAGS := -Wall -g3
-CXXFLAGS := -Wall -std=c++11
+CXXFLAGS := -Wall -g3 -std=c++11
+DEBUG_CXXFLAGS := -Wall -std=c++11
 
 TARGET_SOURCES := $(shell find src/ -name "*.cpp")
 TARGET_OBJECTS := $(patsubst %.cpp, %.o, $(TARGET_SOURCES))
@@ -53,19 +55,30 @@ TEST_SOURCES += src/InputParameterParser.cpp src/SimCell.cpp src/SimMatrix.cpp
 
 TEST_OBJECTS := $(patsubst %.cpp, %.o, $(TEST_SOURCES))
 
-all: target test
+all: target test debug test_debug
 #May be a problem, the order of arguments matters for linkage of the test part of project
 GTEST_FLAGS := -I $$GTEST_HOME/include -L $$GTEST_HOME/lib -lgtest -lgtest_main -lpthread
 THREAD_FLAGS := -pthread 
+DEBUG_FLAGS := -g3
 
 target: $(EXECUTABLE)
 test: $(TEST_EXECUTABLE)
+debug: $(DEBUG_EXECUTABLE)
+test_debug: $(TEST_DEBUG_EXECUTABLE)
 
 $(EXECUTABLE): $(TARGET_OBJECTS)
 	    $(CXX) $(CXXFLAGS) $(LDFLAGS) $(THREAD_FLAGS) -o $(EXECUTABLE) $(TARGET_OBJECTS) $(LDLIBS)
 
 $(TEST_EXECUTABLE): $(TEST_OBJECTS)
 	    $(CXX) $(CXXFLAGS) $(LDFLAGS) $(THREAD_FLAGS) -o $(TEST_EXECUTABLE) $(TEST_OBJECTS) $(LDLIBS) $(GTEST_FLAGS)
+
+
+$(DEBUG_EXECUTABLE): $(TARGET_OBJECTS)
+	    $(CXX) $(DEBUG_CXXFLAGS) $(LDFLAGS) $(THREAD_FLAGS) $(DEBUG_FLAGS) -o $(DEBUG_EXECUTABLE) $(TARGET_OBJECTS) $(LDLIBS)
+
+
+$(DEBUG_TEST_EXECUTABLE): $(TEST_OBJECTS)
+	    $(CXX) $(DEBUG_CXXFLAGS) $(LDFLAGS) $(THREAD_FLAGS) -o $(DEBUG_TEST_EXECUTABLE) $(TEST_OBJECTS) $(LDLIBS) $(GTEST_FLAGS)
 
 depend: .depend
 

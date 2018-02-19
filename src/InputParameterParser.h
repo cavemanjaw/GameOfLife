@@ -52,7 +52,7 @@ const std::array<InputParameter, NUMBER_OF_PARAMETERS> parameters =
 			{"--rules=", INTEGER_PACK},
 			{"--explore-results", BOOL},
 			{"--help", BOOL},
-			{"--threads", INTEGER}
+			{"--threads=", INTEGER}
 	}};
 
 static_assert(NUMBER_OF_PARAMETERS == NO_OF_PARAMETER_TYPES,
