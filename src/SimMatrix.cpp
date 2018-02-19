@@ -217,13 +217,16 @@ void SimMatrix::DoSimStep(const MatrixSetup& setup)
 		if (i != setup.numberOfThreads - 1)
 		{
 		threads.push_back(
-		  std::thread(&SimMatrix::DoSimStepThreadJob, this, std::ref(j), j + numberOfRowsPerJob, std::ref(localSimMatrix.at(i)), std::ref(setup)));
+		  std::thread(&SimMatrix::DoSimStepThreadJob, this, std::ref(j),
+				      j + numberOfRowsPerJob, std::ref(localSimMatrix.at(i)), std::ref(setup)));
 
 		}
 		else //this is the last thread to dispatch include the remainingJobs rows...
 		{
 			threads.push_back(
-			  std::thread(&SimMatrix::DoSimStepThreadJob, this, std::ref(j), j + numberOfRowsPerJob + remainingJobs, std::ref(localSimMatrix.at(i)), std::ref(setup)));
+			  std::thread(&SimMatrix::DoSimStepThreadJob, this, std::ref(j),
+					      j + numberOfRowsPerJob + remainingJobs,
+						  std::ref(localSimMatrix.at(i)), std::ref(setup)));
 		}
 	}
 
@@ -253,7 +256,10 @@ void SimMatrix::DoSimStep(const MatrixSetup& setup)
 	}
 }
 
-void SimMatrix::DoSimStepThreadJob(std::size_t startRow, std::size_t endRow, SimMatrix& locSimMatrix, const MatrixSetup& setup)
+void SimMatrix::DoSimStepThreadJob(std::size_t startRow,
+		                           std::size_t endRow,
+								   SimMatrix& locSimMatrix,
+								   const MatrixSetup& setup)
 {
 	for (std::size_t i = startRow; i < endRow; ++i)
 	{
