@@ -326,5 +326,6 @@ void PrintProgramHelp()
 {
 	std::cout << "usage: GameOfLife [--help] [--steps=<number>] [--height=<number>] [--width=<number>]\n"
 			  << "                  [--print-pretty] [--store-results] [--print-status] [--explore-results]\n"
-			  << "                  [--rules=[<number>,<number>,<number>,<number>]]\n";
+			  << "                  [--rules=[<number>,<number>,<number>,<number>]]\n"
+			  << "                  [--threads=<number>]\n";
 }
