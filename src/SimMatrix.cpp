@@ -211,7 +211,7 @@ void SimMatrix::DoSimStep(const MatrixSetup& setup)
 	//Dispatch jobs, can it be optimized (without last if statement?)
 	//Can be, just add rameining jobs to numberOfRows and then assign zero to the variable
 	//Job distapched variable?
-	for (std::size_t i = 0, j = 0; i < threads.capacity(); ++i, j +=numberOfRowsPerJob)
+	for (std::size_t i = 0, j = 0; i < setup.numberOfThreads; ++i, j +=numberOfRowsPerJob)
 	{
 		threads.push_back(
 		  std::thread(&SimMatrix::DoSimStepThreadJob, this, std::ref(j), j + numberOfRowsPerJob, std::ref(localSimMatrix.at(i)), std::ref(setup)));
@@ -224,13 +224,13 @@ void SimMatrix::DoSimStep(const MatrixSetup& setup)
 	}
 
 	//Wait for the execution of all of the threads
-	for (std::size_t i = 0; i < threads.capacity(); ++i)
+	for (std::size_t i = 0; i < setup.numberOfThreads; ++i)
 	{
 		threads.at(i).join();
 	}
 
 	//Merge the inputs from threads
-	for (std::size_t i = 0, j = 0; i < threads.capacity(); ++i, j +=numberOfRowsPerJob)
+	for (std::size_t i = 0, j = 0; i < setup.numberOfThreads; ++i, j +=numberOfRowsPerJob)
 	{
 		for (std::size_t k = j; k < numberOfRowsPerJob; ++k)
 		{
