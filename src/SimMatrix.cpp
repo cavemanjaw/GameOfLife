@@ -213,10 +213,14 @@ void SimMatrix::DoSimStep(const MatrixSetup& setup)
 	//Job distapched variable?
 	for (std::size_t i = 0, j = 0; i < setup.numberOfThreads; ++i, j +=numberOfRowsPerJob)
 	{
+
+		if (i != setup.numberOfThreads - 1)
+		{
 		threads.push_back(
 		  std::thread(&SimMatrix::DoSimStepThreadJob, this, std::ref(j), j + numberOfRowsPerJob, std::ref(localSimMatrix.at(i)), std::ref(setup)));
 
-		if (i == threads.capacity() - 1)
+		}
+		else //this is the last thread to dispatch include the remainingJobs rows...
 		{
 			threads.push_back(
 			  std::thread(&SimMatrix::DoSimStepThreadJob, this, std::ref(j), j + numberOfRowsPerJob + remainingJobs, std::ref(localSimMatrix.at(i)), std::ref(setup)));
@@ -232,11 +236,14 @@ void SimMatrix::DoSimStep(const MatrixSetup& setup)
 	//Merge the inputs from threads
 	for (std::size_t i = 0, j = 0; i < setup.numberOfThreads; ++i, j +=numberOfRowsPerJob)
 	{
-		for (std::size_t k = j; k < numberOfRowsPerJob; ++k)
+		if (i != setup.numberOfThreads - 1)
 		{
-			this->simMatrix.at(k) = localSimMatrix.at(i).simMatrix.at(k);
+			for (std::size_t k = j; k < numberOfRowsPerJob; ++k)
+			{
+				this->simMatrix.at(k) = localSimMatrix.at(i).simMatrix.at(k);
+			}
 		}
-		if (i == threads.capacity() - 1)
+		else //work of the last thread is being done here
 		{
 			for (std::size_t k = j; k < numberOfRowsPerJob + remainingJobs; ++k)
 			{
