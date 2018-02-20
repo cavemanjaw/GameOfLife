@@ -195,62 +195,78 @@ void SimMatrix::SetCellStatus(int x, int y, int aliveAdjacent, SimulationRulesSe
 
 void SimMatrix::DoSimStep(const MatrixSetup& setup)
 {
-	//TODO: Go through this flow :)
-
-	//Create vector of threads and reserve the necessary space
-	ThreadVec threads;
-	threads.reserve(setup.numberOfThreads);
-	std::vector<SimMatrix> localSimMatrix(setup.numberOfThreads, *this);
-
-	//Calculate the division of work to be done by threads
-	std::size_t numberOfRowsPerJob = this->simMatrix.size() / setup.numberOfThreads;
-	//Remaining jobs due to mod != 0
-	std::size_t remainingJobs = this->simMatrix.size() -
-	  setup.numberOfThreads * numberOfRowsPerJob;
-
-	//Dispatch jobs, can it be optimized (without last if statement?)
-	//Can be, just add rameining jobs to numberOfRows and then assign zero to the variable
-	//Job distapched variable?
-	for (std::size_t i = 0, j = 0; i < setup.numberOfThreads; ++i, j +=numberOfRowsPerJob)
+	if (setup.numberOfThreads == 1)
 	{
+		SimMatrix locSimMatrix = *this;
 
-		if (i != setup.numberOfThreads - 1)
+		for (std::size_t i = 0; i < locSimMatrix.simMatrix.size(); ++i)
 		{
-		threads.push_back(
-		  std::thread(&SimMatrix::DoSimStepThreadJob, this, std::ref(j),
-				      j + numberOfRowsPerJob, std::ref(localSimMatrix.at(i)), std::ref(setup)));
-
-		}
-		else //this is the last thread to dispatch include the remainingJobs rows...
-		{
-			threads.push_back(
-			  std::thread(&SimMatrix::DoSimStepThreadJob, this, std::ref(j),
-					      j + numberOfRowsPerJob + remainingJobs,
-						  std::ref(localSimMatrix.at(i)), std::ref(setup)));
-		}
-	}
-
-	//Wait for the execution of all of the threads
-	for (std::size_t i = 0; i < setup.numberOfThreads; ++i)
-	{
-		threads.at(i).join();
-	}
-
-	//Merge the inputs from threads
-	for (std::size_t i = 0, j = 0; i < setup.numberOfThreads; ++i, j +=numberOfRowsPerJob)
-	{
-		if (i != setup.numberOfThreads - 1)
-		{
-			for (std::size_t k = j; k < numberOfRowsPerJob; ++k)
+			for (std::size_t j = 0; j < locSimMatrix.simMatrix.at(i).size(); ++j)
 			{
-				this->simMatrix.at(k) = localSimMatrix.at(i).simMatrix.at(k);
+				locSimMatrix.SetCellStatus(i, j, AdjacentCellsAlive(i, j), setup.rules);
 			}
 		}
-		else //work of the last thread is being done here
+		*this = locSimMatrix;
+	}
+	else
+	{
+		//TODO: Go through this flow :)
+
+		//Create vector of threads and reserve the necessary space
+		ThreadVec threads;
+		threads.reserve(setup.numberOfThreads);
+		std::vector<SimMatrix> localSimMatrix(setup.numberOfThreads, *this);
+
+		//Calculate the division of work to be done by threads
+		std::size_t numberOfRowsPerJob = this->simMatrix.size() / setup.numberOfThreads;
+		//Remaining jobs due to mod != 0
+		std::size_t remainingJobs = this->simMatrix.size() -
+				setup.numberOfThreads * numberOfRowsPerJob;
+
+		//Dispatch jobs, can it be optimized (without last if statement?)
+		//Can be, just add rameining jobs to numberOfRows and then assign zero to the variable
+		//Job distapched variable?
+		for (std::size_t i = 0, j = 0; i < setup.numberOfThreads; ++i, j +=numberOfRowsPerJob)
 		{
-			for (std::size_t k = j; k < numberOfRowsPerJob + remainingJobs; ++k)
+
+			if (i != setup.numberOfThreads - 1)
 			{
-				this->simMatrix.at(k) = localSimMatrix.at(i).simMatrix.at(k);
+				threads.push_back(
+						std::thread(&SimMatrix::DoSimStepThreadJob, this, std::ref(j),
+								j + numberOfRowsPerJob, std::ref(localSimMatrix.at(i)), std::ref(setup)));
+
+			}
+			else //this is the last thread to dispatch include the remainingJobs rows...
+			{
+				threads.push_back(
+						std::thread(&SimMatrix::DoSimStepThreadJob, this, std::ref(j),
+								j + numberOfRowsPerJob + remainingJobs,
+								std::ref(localSimMatrix.at(i)), std::ref(setup)));
+			}
+		}
+
+		//Wait for the execution of all of the threads
+		for (std::size_t i = 0; i < setup.numberOfThreads; ++i)
+		{
+			threads.at(i).join();
+		}
+
+		//Merge the inputs from threads
+		for (std::size_t i = 0, j = 0; i < setup.numberOfThreads; ++i, j +=numberOfRowsPerJob)
+		{
+			if (i != setup.numberOfThreads - 1)
+			{
+				for (std::size_t k = j; k < numberOfRowsPerJob; ++k)
+				{
+					this->simMatrix.at(k) = localSimMatrix.at(i).simMatrix.at(k);
+				}
+			}
+			else //work of the last thread is being done here
+			{
+				for (std::size_t k = j; k < numberOfRowsPerJob + remainingJobs; ++k)
+				{
+					this->simMatrix.at(k) = localSimMatrix.at(i).simMatrix.at(k);
+				}
 			}
 		}
 	}
