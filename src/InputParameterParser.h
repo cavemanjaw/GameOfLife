@@ -56,7 +56,8 @@ const std::array<InputParameter, NUMBER_OF_PARAMETERS> parameters =
 	}};
 
 static_assert(NUMBER_OF_PARAMETERS == NO_OF_PARAMETER_TYPES,
-		      //&& NUMBER_OF_PARAMETERS == parameters.size(), //TODO: parameters cannot be constexpr, so we cannot check this
+		      //&& NUMBER_OF_PARAMETERS == parameters.size(),
+		      //TODO: parameters cannot be constexpr, so we cannot check this
 			  //at the compile time, parameters hold std::string which cannot be constexpr
 			  "Number of parameters in parameters variable have to match ParameterType enum items!");
 
@@ -74,6 +75,7 @@ private:
 };
 
 //Wrap this into a class or something
-//void ParseParameters( //What arguments, where should it be declared and called?
+//void ParseParameters()
+//What arguments, where should it be declared and called?
 
 #endif

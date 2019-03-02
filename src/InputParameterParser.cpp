@@ -26,10 +26,6 @@ bool InputParameterParser::IsParameterProvided(const InputParameter& parameter) 
 			//but this function checks only if the parameter was found
 			return true;	
 		}
-		else
-		{
-			continue;
-		}
 	}
 	return false;
 }
@@ -51,10 +47,6 @@ int InputParameterParser::GetParameterIntegerValue(const InputParameter& paramet
 			std::string valueOfParameter = token.substr(parameter.parameter.size(), std::string::npos);
 			int numericParameterValue = std::stoi(valueOfParameter);
 			return numericParameterValue;	
-		}
-		else
-		{
-			continue;
 		}
 	}
 	//Indicate wrong behaviour with improper, special value of return value?
@@ -88,10 +80,6 @@ std::vector<int> InputParameterParser::GetParameterIntegerPackValue(const InputP
 				}
 				startPosition = endPosition;
 			}
-		}
-		else
-		{
-			continue;
 		}
 	}
 	//Indicate wrong behaviour with improper, special value of return value?
