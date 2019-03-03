@@ -12,7 +12,7 @@ using ThreadVec = std::vector<std::thread>;
 
 SimMatrix::SimMatrix(int matrixHeight, int matrixWidth, FillMode fillMode)
 {
-//Workaroung right now, case for random filling uses member function
+//Workaround right now, case for random filling uses member function
 //Consider if checking inside two loops (if that is on top of assignment is faster than if before two loops
 
 //First of all, resize the matrix
@@ -189,7 +189,7 @@ void SimMatrix::SetCellStatus(int x, int y, int aliveAdjacent, SimulationRulesSe
 // Consider leaking resources
 
 //Can this function be written for also returning new SimulationMatrix?
-//TODO: Consider if returning something and not assignint returned variable is more costly than 'void' function
+//TODO: Consider if returning something and not assigning returned variable is more costly than 'void' function
 
 //Two of the functions can be modificated in such way to operate only on simMatrix field of SimMatrix class
 
@@ -224,8 +224,8 @@ void SimMatrix::DoSimStep(const MatrixSetup& setup)
 				setup.numberOfThreads * numberOfRowsPerJob;
 
 		//Dispatch jobs, can it be optimized (without last if statement?)
-		//Can be, just add rameining jobs to numberOfRows and then assign zero to the variable
-		//Job distapched variable?
+		//Can be, just add remaining jobs to numberOfRows and then assign zero to the variable
+		//Job dispatched variable?
 		for (std::size_t i = 0, j = 0; i < setup.numberOfThreads; ++i, j +=numberOfRowsPerJob)
 		{
 
