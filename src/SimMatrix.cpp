@@ -26,6 +26,7 @@ case RANDOM_FILL:
 	{		
 		for (auto j = i->begin(); j != i->end(); ++j)
 		{
+			// Argument implicit conversion from int to bool
 			j->SetCellState(rand()%2); 
 		}
 	}
@@ -47,6 +48,7 @@ break;
 }
 }
 
+// Is this function ever called for gathering statistics?
 std::pair<int, int> SimMatrix::GetMaxRespawnCell()
 {
 	std::pair<int, int> maxRespawnCellCoord(0, 0);
@@ -59,6 +61,7 @@ std::pair<int, int> SimMatrix::GetMaxRespawnCell()
 			//Can be done on iterators?
 			if (j->GetRespawnCounter() > maxRespawn)
 			{
+				//TODO: Is this working okay now?
 				//Recent bug, not assigning value to max counter
 				maxRespawn = j->GetRespawnCounter();
 				maxRespawnCellCoord.first = (i - simMatrix.begin()); 
