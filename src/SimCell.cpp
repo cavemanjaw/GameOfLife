@@ -39,11 +39,7 @@ void SimCell::SetDead()
 
 bool SimCell::IsAlive() const
 {
-	if (isAlive)
-	{
-		return true;
-	}
-	return false;
+	return isAlive;
 }
 
 // Dangerous, because of not incrementing any of counters, call of this function is not captured by statistics
