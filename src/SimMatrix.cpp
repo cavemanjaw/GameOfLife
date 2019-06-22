@@ -4,6 +4,7 @@
 #include "GameOfLife.h"
 #include <time.h>
 #include <thread>
+#include <limits>
 
 using ThreadVec = std::vector<std::thread>;
 
@@ -51,7 +52,11 @@ break;
 // Is this function ever called for gathering statistics?
 std::pair<int, int> SimMatrix::GetMaxRespawnCell()
 {
-	std::pair<int, int> maxRespawnCellCoord(0, 0);
+	// Initialize out variable to invalid value to signal no cell matching statistics
+	std::pair<int, int> maxRespawnCellCoord
+		(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
+
+	// Initialze the loop counter
 	int maxRespawn = 0;	
 
 	for (auto i = simMatrix.begin(); i != simMatrix.end(); ++i)
@@ -61,11 +66,16 @@ std::pair<int, int> SimMatrix::GetMaxRespawnCell()
 			//Can be done on iterators?
 			if (j->GetRespawnCounter() > maxRespawn)
 			{
-				//TODO: Is this working okay now?
-				//Recent bug, not assigning value to max counter
 				maxRespawn = j->GetRespawnCounter();
+
+				// Getting the distance using iterator arithmetics
 				maxRespawnCellCoord.first = (i - simMatrix.begin()); 
 				maxRespawnCellCoord.second = (j - i->begin());
+			}
+			else if (j->GetRespawnCounter() == maxRespawn)
+			{
+				// Two cells have the same statistics
+				// TODO: How to deal with that?
 			}
 		}
 	}
