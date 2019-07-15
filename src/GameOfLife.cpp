@@ -171,19 +171,24 @@ MatrixSetup SetSimulationFromParameters(const InputParameterParser& parserInstan
 	//TODO: Needs refactor, types are inconsistent, branches can be reduced
 	int numberOfThreadsFromParameter = parserInstance.GetParameterIntegerValue(parameters[THREADS]);
 
-	if (numberOfThreadsFromParameter > std::thread::hardware_concurrency())
-	{
-		setup.numberOfThreads = std::thread::hardware_concurrency();
-	}
-	else if (numberOfThreadsFromParameter == -1)
+	// If parameter was not provided
+	if (numberOfThreadsFromParameter == -1)
 	{
 		//Parameter was not provided, run the simulation on one core
 		setup.numberOfThreads = 1;
 	}
 	else
 	{
-		//Set the value according to parameter that was provided
-		setup.numberOfThreads = numberOfThreadsFromParameter;
+		// Cap the maximum number of threads to HW supported number
+		if (numberOfThreadsFromParameter > std::thread::hardware_concurrency())
+		{
+			setup.numberOfThreads = std::thread::hardware_concurrency();
+		}
+		else
+		{
+			//Set the value according to parameter that was provided
+			setup.numberOfThreads = numberOfThreadsFromParameter;
+		}
 	}
 
 	//For ParameterCharacter::INTEGER -1 will be returned if no value provided
