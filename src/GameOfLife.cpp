@@ -312,6 +312,10 @@ MatrixSetup SetSimulation()
 	std::cout << "Do you want to set custom simulation rules? [Y/n]" << std::endl;
 	std::cout << "> ";
 	std::cin >> sign;
+
+	//TODO: Quick fix, always use one thread in case of TUI setting-up parameters
+	setup.numberOfThreads = 1;
+
 	if (sign == 'Y')
 	{
 		SetSimulationRules(setup.rules);
