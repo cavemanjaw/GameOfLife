@@ -313,8 +313,7 @@ MatrixSetup SetSimulation()
         std::cout << "> ";
         std::cin >> sign;
 
-        const char* charNumOfThreads = &sign;
-        setup.numberOfThreads = atoi(charNumOfThreads);
+        setup.numberOfThreads = atoi(&sign);
 
 	//For setting simulation rules
 	std::cout << "Do you want to set custom simulation rules? [Y/n]" << std::endl;
