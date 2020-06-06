@@ -308,13 +308,18 @@ MatrixSetup SetSimulation()
 		setup.isPretty = false;
 	}
 	
+        //For setting the number of threads, that will be used for simulation
+        std::cout << "How many threads should be the simulation dispatched to? [number]" << std::endl;
+        std::cout << "> ";
+        std::cin >> sign;
+
+        const char* charNumOfThreads = &sign;
+        setup.numberOfThreads = atoi(charNumOfThreads);
+
 	//For setting simulation rules
 	std::cout << "Do you want to set custom simulation rules? [Y/n]" << std::endl;
 	std::cout << "> ";
 	std::cin >> sign;
-
-	//TODO: Quick fix, always use one thread in case of TUI setting-up parameters
-	setup.numberOfThreads = 1;
 
 	if (sign == 'Y')
 	{
@@ -325,6 +330,8 @@ MatrixSetup SetSimulation()
 		SetDefaultSimulationRules(setup.rules);
 	}
 	std::cout << std::endl;
+
+
 
 	//Return calculated sumulation setup, can be used to pass it to RunSimulation()
 	return setup;
