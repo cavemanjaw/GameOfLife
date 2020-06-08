@@ -14,6 +14,9 @@ int main(int argc, const char* argv[])
 	SimulationOutput simOutput;
 	InputParameterParser parserInstance(argc, argv);
 
+	// Configure iostream global object cout for the simulation printing
+	ConfigureCout();
+
 	//TODO: simOutput is actually on the stack, investigate what optimizations could be made
 
 	//TODO: Do better handling of initial start menu of program

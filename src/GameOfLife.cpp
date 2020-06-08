@@ -74,11 +74,6 @@ SimulationOutput RunSimulation(MatrixSetup setup)
 	
 	for (int i = 0; i < setup.stepsAmount; ++i)
 	{
-
-		//For only one "%" sign during printing simulation status
-		std::cout << std::fixed;
-		std::cout << std::setprecision(2);
-		
 		//Could be done in some better way ;)
 		if (setup.saveMatrixSteps)
 		{
@@ -343,4 +338,11 @@ void PrintProgramHelp()
 			  << "                  [--print-pretty] [--store-results] [--print-status] [--explore-results]\n"
 			  << "                  [--rules=[<number>,<number>,<number>,<number>]]\n"
 			  << "                  [--threads=<number>]\n";
+}
+
+void ConfigureCout()
+{
+    //For only one "%" appearing sign during printing simulation status
+    std::cout << std::fixed;
+    std::cout << std::setprecision(2);
 }

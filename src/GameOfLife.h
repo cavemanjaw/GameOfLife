@@ -72,6 +72,7 @@ SimulationOutput RunSimulation(MatrixSetup setup);
 void SetSimulationRules(SimulationRulesSetup& rulesSetup);
 void SetDefaultSimulationRules(SimulationRulesSetup& rulesSetup);
 void PrintProgramHelp();
+void ConfigureCout();
 
 // This should be placed higher than in SimMatrix class
 // Not sure, since right now it modifies only one object of SimMatrix type, pushing the simulation one step forward
