@@ -22,13 +22,13 @@ void ExploreSimulationResults(SimulationOutput simResults)
 	//Loop for printing choosen matrix step
 	while (escapeChar != 'n')
 	{
-		std::cout << "Which simulation step matrix do you want to see?" << std::endl;
+		std::cout << "Which simulation step matrix do you want to see?" << "\n";
 		int numberOfSimStep;
 		std::cin >> numberOfSimStep;
 		
 		if (numberOfSimStep < static_cast<int>(simResults.matrixSteps.size()) && numberOfSimStep >= 0)
 		{
-			std::cout << "Do you want the matrix to be pretty printed? [Y/n]" << std::endl;
+			std::cout << "Do you want the matrix to be pretty printed? [Y/n]" << "\n";
 			char printPretty;
 			std::cin >> printPretty;
 			
@@ -44,9 +44,9 @@ void ExploreSimulationResults(SimulationOutput simResults)
 		}
 		else
 		{
-			std::cout << "There is no such step in the results!" << std::endl;
+			std::cout << "There is no such step in the results!" << "\n";
 		}
-	std::cout << "Do you want to continue? [Y/n]" << std::endl;
+	std::cout << "Do you want to continue? [Y/n]" << "\n";
 	std::cin.clear();
 	std::cin >> escapeChar;
 	
@@ -58,9 +58,9 @@ SimulationOutput RunSimulation(MatrixSetup setup)
 	SimMatrix simMatrix(setup.matrixHeight, setup.matrixWidth, FillMode::RANDOM_FILL);
 	SimulationOutput simOutput;	
 	
-	std::cout << "Simulation starts..." << std::endl << std::endl;	
+	std::cout << "Simulation starts..." << "\n" << "\n";	
 
-	std::cout << "Initial values of simulation matrix:" << std::endl;	
+	std::cout << "Initial values of simulation matrix:" << "\n";	
 	if (setup.isPretty)
 	{
 		simMatrix.PrintSimMatrixPretty();
@@ -70,7 +70,7 @@ SimulationOutput RunSimulation(MatrixSetup setup)
 		simMatrix.PrintSimMatrix();	
 	}
 
-	std::cout << std::endl;
+	std::cout << "\n";
 	
 	for (int i = 0; i < setup.stepsAmount; ++i)
 	{
@@ -89,7 +89,7 @@ SimulationOutput RunSimulation(MatrixSetup setup)
 
 		if (setup.showSteps)
 		{
-			std::cout << "Simulation step number: " << i + 1 << std::endl;
+			std::cout << "Simulation step number: " << i + 1 << "\n";
 
 			if (setup.isPretty)
 			{
@@ -99,10 +99,10 @@ SimulationOutput RunSimulation(MatrixSetup setup)
 			{		
 				simMatrix.PrintSimMatrix();	
 			}
-		std::cout << std::endl;
+		std::cout << "\n";
 		}
 	}
-	std::cout << "Output values of simulation matrix:" << std::endl;	
+	std::cout << "Output values of simulation matrix:" << "\n";	
 	if (setup.isPretty)
 	{
 		simMatrix.PrintSimMatrixPretty();
@@ -113,7 +113,7 @@ SimulationOutput RunSimulation(MatrixSetup setup)
 	}
 
 	//Consider that this is not the end of simulation, since we are obtaining simOutput 
-	std::cout << std::endl << "Simulation has ended..." << std::endl;
+	std::cout << "\n" << "Simulation has ended..." << "\n";
 	return simOutput;
 }
 
@@ -121,22 +121,22 @@ void SetSimulationRules(SimulationRulesSetup& rulesSetup)
 {
 	int number;
 
-	std::cout << "How many alive adjacent should there minimally be to keep cell alive? [integer]" << std::endl;
+	std::cout << "How many alive adjacent should there minimally be to keep cell alive? [integer]" << "\n";
 	std::cout << "> ";
 	std::cin >> number;
 	rulesSetup.minAliveAdjacentToKeepAlive = number;
 
-	std::cout << "How many alive adjacent should there maximally be to keep cell alive? [integer]" << std::endl;
+	std::cout << "How many alive adjacent should there maximally be to keep cell alive? [integer]" << "\n";
 	std::cout << "> ";
 	std::cin >> number;
 	rulesSetup.maxAliveAdjacentToKeepAlive = number;
 
-	std::cout << "How many alive adjacent should there minimally be to respawn dead cell? [integer]" << std::endl;
+	std::cout << "How many alive adjacent should there minimally be to respawn dead cell? [integer]" << "\n";
 	std::cout << "> ";
 	std::cin >> number;
 	rulesSetup.minAliveAdjacentToRespawn = number;
 
-	std::cout << "How many alive adjacent should there minimally be to respawn dead cell? [integer]" << std::endl;
+	std::cout << "How many alive adjacent should there minimally be to respawn dead cell? [integer]" << "\n";
 	std::cout << "> ";
 	std::cin >> number;
 	rulesSetup.maxAliveAdjacentToRespawn = number;
@@ -242,22 +242,22 @@ MatrixSetup SetSimulation()
 {
 	MatrixSetup setup;
 	//Master iostream library ;)
-	std::cout << "///////////////////////////////////////////////////////////////" << std::endl;
-	std::cout << "///////        Welcome to GameOfLife simulator       //////////" << std::endl;
-	std::cout << "///////////////////////////////////////////////////////////////" << std::endl;
-	std::cout << std::endl;
-	std::cout << std::endl;
+	std::cout << "///////////////////////////////////////////////////////////////" << "\n";
+	std::cout << "///////        Welcome to GameOfLife simulator       //////////" << "\n";
+	std::cout << "///////////////////////////////////////////////////////////////" << "\n";
+	std::cout << "\n";
+	std::cout << "\n";
  
-	std::cout << "How many steps do you want to simulate?" << std::endl;
+	std::cout << "How many steps do you want to simulate?" << "\n";
 	std::cout << "> ";	
 	std::cin >> setup.stepsAmount;
-	std::cout << "How big should the height of simulation matrix be?" << std::endl;
+	std::cout << "How big should the height of simulation matrix be?" << "\n";
 	std::cout << "> ";
 	std::cin >> setup.matrixHeight;
-	std::cout << "How big should the width of simulation matrix be?" << std::endl;
+	std::cout << "How big should the width of simulation matrix be?" << "\n";
 	std::cout << "> ";	
 	std::cin >> setup.matrixWidth;
-	std::cout << "Do you want to store every state of simulation matrix? [Y/n]" << std::endl;
+	std::cout << "Do you want to store every state of simulation matrix? [Y/n]" << "\n";
 	
 	//Only one variable is needed?
 	char sign;
@@ -274,7 +274,7 @@ MatrixSetup SetSimulation()
 		setup.saveMatrixSteps = false;
 	}
 
-	std::cout << "Do you want to print the status of matrix during simulation computation? [Y/n]" << std::endl;
+	std::cout << "Do you want to print the status of matrix during simulation computation? [Y/n]" << "\n";
 	//Handle it more securly ;)	
 
 	std::cout << "> ";	
@@ -290,7 +290,7 @@ MatrixSetup SetSimulation()
 	}
 	
 	//Handle it more securly ;)
-	std::cout << "Do you want the matrix to be printed pretty? [Y/n]" << std::endl;
+	std::cout << "Do you want the matrix to be printed pretty? [Y/n]" << "\n";
 	std::cout << "> ";	
 	std::cin >> sign;
 	
@@ -304,14 +304,14 @@ MatrixSetup SetSimulation()
 	}
 	
         //For setting the number of threads, that will be used for simulation
-        std::cout << "How many threads should be the simulation dispatched to? [number]" << std::endl;
+        std::cout << "How many threads should be the simulation dispatched to? [number]" << "\n";
         std::cout << "> ";
         std::cin >> sign;
 
         setup.numberOfThreads = atoi(&sign);
 
 	//For setting simulation rules
-	std::cout << "Do you want to set custom simulation rules? [Y/n]" << std::endl;
+	std::cout << "Do you want to set custom simulation rules? [Y/n]" << "\n";
 	std::cout << "> ";
 	std::cin >> sign;
 
@@ -323,7 +323,7 @@ MatrixSetup SetSimulation()
 	{
 		SetDefaultSimulationRules(setup.rules);
 	}
-	std::cout << std::endl;
+	std::cout << "\n";
 
 
 

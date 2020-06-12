@@ -42,7 +42,7 @@ int main(int argc, const char* argv[])
 		simOutput = RunSimulation(SetSimulation());
 
 		//Menu for exploring simulation results
-		std::cout << "Do you want to explore simulation results? [Y/n]" << std::endl;
+		std::cout << "Do you want to explore simulation results? [Y/n]" << "\n";
 		char exploreResults;
 		std::cin >> exploreResults;
 

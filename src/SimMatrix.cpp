@@ -90,7 +90,7 @@ void SimMatrix::PrintSimMatrix() const
 		{
 			std::cout << j->IsAlive() << " ";
 		}
-	std::cout << std::endl;
+	std::cout << "\n";
 	}
 }
 
@@ -109,7 +109,7 @@ void SimMatrix::PrintSimMatrixPretty() const
 				std::cout << "-";
 			}
 		}
-	std::cout << std::endl;
+	std::cout << "\n";
 	}
 }
 
