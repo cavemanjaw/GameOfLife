@@ -72,16 +72,43 @@ SimulationOutput RunSimulation(MatrixSetup setup)
 
 	std::cout << std::endl;
 	
+	// For the case if matrixSteps throws bad::alloc
+	bool outOfMemory = false;
+
 	for (int i = 0; i < setup.stepsAmount; ++i)
 	{
 		//Could be done in some better way ;)
 		if (setup.saveMatrixSteps)
 		{
-			simOutput.matrixSteps.push_back(simMatrix.DoSimStepReturnMatrix(setup));
-		}
+		  // Will it call the move assignment operator?
+		  SimMatrix returnedMatrix = simMatrix.DoSimStepReturnMatrix(setup);
+
+		  // Try pushing back the result only if there was no situation
+		  // of the lack of memory ever before in this loop
+		  if (!outOfMemory)
+		  {
+		    // Throwing in a loop - how to deal with that?
+		    try
+		    {
+		      // Emplace back? Should call std::move on the sink argument?
+		      simOutput.matrixSteps.push_back(returnedMatrix);
+		    }
+		    // What to catch? std::exception? Everything (...)?
+		    catch (const std::bad_alloc&)
+		    {
+		      outOfMemory = true;
+		      // Save the last SimMatrix and stop trying to push back
+		      // more simulation results
+		      std::cout << "No memory for storing the simulation result "
+		          "at step " << i << " .Exploring simulation "
+		          "results will be possible up to the result "
+		          "of step " << i - 1 << "\n";
+		    }
+		  }
+		} // if (setup.saveMatrixSteps)
 		else
 		{
-		simMatrix.DoSimStep(setup);
+		  simMatrix.DoSimStep(setup);
 		}
 
 		std::cout << static_cast<float>(i)/static_cast<float>(setup.stepsAmount)*100 << "%\r";

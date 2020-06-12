@@ -223,6 +223,8 @@ void SimMatrix::DoSimStep(const MatrixSetup& setup)
 		//Create vector of threads and reserve the necessary space
 		ThreadVec threads;
 		threads.reserve(setup.numberOfThreads);
+
+		// Is call to this vector constructor optimal and correct?
 		std::vector<SimMatrix> localSimMatrix(setup.numberOfThreads, *this);
 
 		//Calculate the division of work to be done by threads
