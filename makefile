@@ -39,8 +39,8 @@ DEBUG_TEST_EXECUTABLE := Test_debug
 .PHONY: all target test debug
 
 CXX := g++
-CXXFLAGS := -Wall -g3 -std=c++11
-DEBUG_CXXFLAGS := -Wall -std=c++11
+CXXFLAGS := -Wall -g3 -std=c++17
+DEBUG_CXXFLAGS := -Wall -std=c++17
 
 TARGET_SOURCES := $(shell find src/ -name "*.cpp")
 TARGET_OBJECTS := $(patsubst %.cpp, %.o, $(TARGET_SOURCES))
