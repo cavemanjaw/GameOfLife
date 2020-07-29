@@ -45,6 +45,10 @@ public:
 	//Returns the amount of alive adjacent cells for given x and y coordinates
 	int AdjacentCellsAlive(int x, int y) const;
 
+	//TODO: Upgrade functions to count all cells from matrix (includig edges)
+	void MyLifeNeighbors(SimMatrix&);
+	void ResetLifeNeighborsCounterAll(SimMatrix&);
+
 protected:
 private:
 	std::vector<std::vector<SimCell>> simMatrix;

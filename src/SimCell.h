@@ -14,11 +14,17 @@ public:
 	void SetCellState(bool state);
 	int GetRespawnCounter();
 	int GetKillCounter();
+	void IncreaseMyLifeNeighbors();
+	void ResetLifeNeighborsCounter();
+{
 protected:
 private:
 	bool isAlive;
 	int killCounter;
 	int respawnCounter;
+	// in the end of analize phase this variable decidade compare with simulation rules to still live or dead
+	// dead neighbours is 9 - life neighbours (not counting cell on edge - solution in progress)
+	int myLiveNeighbors;
 };
 
 #endif

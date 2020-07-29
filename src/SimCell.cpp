@@ -21,7 +21,7 @@ void SimCell::SetAlive()
 {
 	// If it already alive do not do anything
 	if (!isAlive)
-	{	
+	{
 		isAlive = true;
 		++respawnCounter;
 	}
@@ -48,4 +48,14 @@ bool SimCell::IsAlive() const
 void SimCell::SetCellState(bool state)
 {
 	isAlive = state;
+}
+
+void SimCell::IncreaseMyLifeNeighbors()
+{
+    myLifeNeighbors++;
+}
+
+void SimCell::ResetLifeNeighborsCounter()
+{
+    myLifeNeighbors = 0;
 }
