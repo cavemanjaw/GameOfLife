@@ -1,0 +1,3 @@
+[submodule "MatrixVisualizer"]
+	path = MatrixVisualizer
+	url = https://github.com/cavemanjaw/MatrixVisualizer.git
