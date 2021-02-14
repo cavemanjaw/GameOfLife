@@ -24,18 +24,18 @@ switch(fillMode)
 case RANDOM_FILL:
 	srand(time(NULL));
 	for (auto i = simMatrix.begin(); i != simMatrix.end(); ++i)
-	{		
+	{
 		for (auto j = i->begin(); j != i->end(); ++j)
 		{
 			// Argument implicit conversion from int to bool
-			j->SetCellState(rand()%2); 
+			j->SetCellState(rand()%2);
 		}
 	}
 break;
 
 case ALIVE_FILL:
 	for (auto i = simMatrix.begin(); i != simMatrix.end(); ++i)
-	{		
+	{
 		for (auto j = i->begin(); j != i->end(); ++j)
 		{
 			j->SetCellState(true);
@@ -57,7 +57,7 @@ std::pair<int, int> SimMatrix::GetMaxRespawnCell()
 		(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
 
 	// Initialze the loop counter
-	int maxRespawn = 0;	
+	int maxRespawn = 0;
 
 	for (auto i = simMatrix.begin(); i != simMatrix.end(); ++i)
 	{
@@ -69,7 +69,7 @@ std::pair<int, int> SimMatrix::GetMaxRespawnCell()
 				maxRespawn = j->GetRespawnCounter();
 
 				// Getting the distance using iterator arithmetics
-				maxRespawnCellCoord.first = (i - simMatrix.begin()); 
+				maxRespawnCellCoord.first = (i - simMatrix.begin());
 				maxRespawnCellCoord.second = (j - i->begin());
 			}
 			else if (j->GetRespawnCounter() == maxRespawn)
@@ -95,7 +95,7 @@ void SimMatrix::PrintSimMatrix() const
 }
 
 void SimMatrix::PrintSimMatrixPretty() const
-{ 
+{
 	for (auto i = simMatrix.begin(); i != simMatrix.end(); ++i)
 	{
 		for (auto j = i->begin(); j != i->end(); ++j)
@@ -144,7 +144,7 @@ int SimMatrix::AdjacentCellsAlive(int x, int y) const
 				if (simMatrix[i][j].IsAlive() == true)
 				{
 					++aliveAdjacent;
-				}		
+				}
 			}
 		}
 	}
@@ -155,7 +155,7 @@ int SimMatrix::AdjacentCellsAlive(int x, int y) const
 // Function decides if cell is alive or dead at next step
 
 // This function should work on copy!
-// Make it return the copy at the end 
+// Make it return the copy at the end
 // This is possible bad idea, because it will be copied each time SetCellStatus is invoked
 // Pass SimulationRulesSetup here
 void SimMatrix::SetCellStatus(int x, int y, int aliveAdjacent, SimulationRulesSetup rules)
@@ -300,7 +300,7 @@ SimMatrix SimMatrix::DoSimStepReturnMatrix(const MatrixSetup& setup)
 	SimMatrix locSimMatrix = *this;
 
 	for (std::size_t i = 0; i < locSimMatrix.simMatrix.size(); ++i)
-	{		
+	{
 		for (std::size_t j = 0; j < locSimMatrix.simMatrix.at(i).size(); ++j)
 		{
 			locSimMatrix.SetCellStatus(i, j, AdjacentCellsAlive(i, j), setup.rules);
@@ -308,4 +308,36 @@ SimMatrix SimMatrix::DoSimStepReturnMatrix(const MatrixSetup& setup)
 	}
 	*this = locSimMatrix;
 	return locSimMatrix;
+}
+
+// only for cells not from edges (with margins)
+void SimMatrix::MyLifeNeighbors(SimMatrix& sMatrix)
+{
+    for (auto i = sMatrix.simMatrix.begin() + 1; i != sMatrix.simMatrix.end() - 1; ++i)
+	{
+		for (auto j = i->begin() + 1; j != i->end() - 1; ++j)
+		{
+            // around the cell
+            for (int xPosRelative = -1; xPosRelative < 2; xPosRelative++)
+                for ( int yPosRelative = -1; yPosRelative < 2; yPosRelative++)
+                    if ((i + xPosRelative)->begin() + yPosRelative == j)
+                        // if himself do nothing
+                        continue;
+                    else if (((i + xPosRelative)->begin() + yPosRelative )->isAlive())
+                        ((i + xPosRelative)->begin() + yPosRelative )->IncreaseMyLifeNeighbors();;
+                    else
+                        continue;
+		}
+	}
+}
+
+void SimMatrix::ResetLifeNeighborsCounterAll(SimMatrix& sMatrix)
+{
+    for (auto i = sMatrix.simMatrix.begin() + 1; i != sMatrix.simMatrix.end() - 1; ++i)
+	{
+		for (auto j = i->begin() + 1; j != i->end() - 1; ++j)
+		{
+            j->ResetLifeNeighborsCounter();
+        }
+	}
 }

@@ -25,13 +25,13 @@ void ExploreSimulationResults(SimulationOutput simResults)
 		std::cout << "Which simulation step matrix do you want to see?" << "\n";
 		int numberOfSimStep;
 		std::cin >> numberOfSimStep;
-		
+
 		if (numberOfSimStep < static_cast<int>(simResults.matrixSteps.size()) && numberOfSimStep >= 0)
 		{
 			std::cout << "Do you want the matrix to be pretty printed? [Y/n]" << "\n";
 			char printPretty;
 			std::cin >> printPretty;
-			
+
 			if (printPretty == 'Y')
 			{
 				simResults.matrixSteps[numberOfSimStep].PrintSimMatrixPretty();
@@ -40,7 +40,7 @@ void ExploreSimulationResults(SimulationOutput simResults)
 			{
 				simResults.matrixSteps[numberOfSimStep].PrintSimMatrix();
 			}
-		
+
 		}
 		else
 		{
@@ -49,29 +49,29 @@ void ExploreSimulationResults(SimulationOutput simResults)
 	std::cout << "Do you want to continue? [Y/n]" << "\n";
 	std::cin.clear();
 	std::cin >> escapeChar;
-	
+
 	}
 }
 
 SimulationOutput RunSimulation(MatrixSetup setup)
 {
 	SimMatrix simMatrix(setup.matrixHeight, setup.matrixWidth, FillMode::RANDOM_FILL);
-	SimulationOutput simOutput;	
-	
-	std::cout << "Simulation starts..." << "\n" << "\n";	
+	SimulationOutput simOutput;
 
-	std::cout << "Initial values of simulation matrix:" << "\n";	
+	std::cout << "Simulation starts..." << "\n" << "\n";
+
+	std::cout << "Initial values of simulation matrix:" << "\n";
 	if (setup.isPretty)
 	{
 		simMatrix.PrintSimMatrixPretty();
 	}
 	else
-	{		
-		simMatrix.PrintSimMatrix();	
+	{
+		simMatrix.PrintSimMatrix();
 	}
 
 	std::cout << "\n";
-	
+
 	for (int i = 0; i < setup.stepsAmount; ++i)
 	{
 		//Could be done in some better way ;)
@@ -96,23 +96,23 @@ SimulationOutput RunSimulation(MatrixSetup setup)
 				simMatrix.PrintSimMatrixPretty();
 			}
 			else
-			{		
-				simMatrix.PrintSimMatrix();	
+			{
+				simMatrix.PrintSimMatrix();
 			}
 		std::cout << "\n";
 		}
 	}
-	std::cout << "Output values of simulation matrix:" << "\n";	
+	std::cout << "Output values of simulation matrix:" << "\n";
 	if (setup.isPretty)
 	{
 		simMatrix.PrintSimMatrixPretty();
 	}
 	else
-	{		
-		simMatrix.PrintSimMatrix();	
+	{
+		simMatrix.PrintSimMatrix();
 	}
 
-	//Consider that this is not the end of simulation, since we are obtaining simOutput 
+	//Consider that this is not the end of simulation, since we are obtaining simOutput
 	std::cout << "\n" << "Simulation has ended..." << "\n";
 	return simOutput;
 }
@@ -247,27 +247,27 @@ MatrixSetup SetSimulation()
 	std::cout << "///////////////////////////////////////////////////////////////" << "\n";
 	std::cout << "\n";
 	std::cout << "\n";
- 
+
 	std::cout << "How many steps do you want to simulate?" << "\n";
-	std::cout << "> ";	
+	std::cout << "> ";
 	std::cin >> setup.stepsAmount;
 	std::cout << "How big should the height of simulation matrix be?" << "\n";
 	std::cout << "> ";
 	std::cin >> setup.matrixHeight;
 	std::cout << "How big should the width of simulation matrix be?" << "\n";
-	std::cout << "> ";	
+	std::cout << "> ";
 	std::cin >> setup.matrixWidth;
 	std::cout << "Do you want to store every state of simulation matrix? [Y/n]" << "\n";
-	
+
 	//Only one variable is needed?
 	char sign;
 
-	std::cout << "> ";	
+	std::cout << "> ";
 	std::cin >> sign;
 
 	if (sign == 'Y')
 	{
-		setup.saveMatrixSteps = true; 
+		setup.saveMatrixSteps = true;
 	}
 	else
 	{
@@ -275,34 +275,34 @@ MatrixSetup SetSimulation()
 	}
 
 	std::cout << "Do you want to print the status of matrix during simulation computation? [Y/n]" << "\n";
-	//Handle it more securly ;)	
+	//Handle it more securly ;)
 
-	std::cout << "> ";	
+	std::cout << "> ";
 	std::cin >> sign;
-	
+
 	if (sign == 'Y')
 	{
-		setup.showSteps = true; 
+		setup.showSteps = true;
 	}
 	else
 	{
 		setup.showSteps = false;
 	}
-	
+
 	//Handle it more securly ;)
 	std::cout << "Do you want the matrix to be printed pretty? [Y/n]" << "\n";
-	std::cout << "> ";	
+	std::cout << "> ";
 	std::cin >> sign;
-	
+
 	if (sign == 'Y')
 	{
-		setup.isPretty = true; 
+		setup.isPretty = true;
 	}
 	else
 	{
 		setup.isPretty = false;
 	}
-	
+
         //For setting the number of threads, that will be used for simulation
         std::cout << "How many threads should be the simulation dispatched to? [number]" << "\n";
         std::cout << "> ";
@@ -346,3 +346,5 @@ void ConfigureCout()
     std::cout << std::fixed;
     std::cout << std::setprecision(2);
 }
+
+

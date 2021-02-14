@@ -54,10 +54,10 @@ struct MatrixSetup
 struct SimulationSetup
 {
 	//What fields should be defined here?
-	//Take them for the main function	
+	//Take them for the main function
 	int simulationInstances;
 
-	//Redundant information, simulationInstances can be derived from 
+	//Redundant information, simulationInstances can be derived from
 	std::vector<MatrixSetup> instanceSetup;
 
 	//Any non-redundant info, that is information that cant be derived form above defined vector?
